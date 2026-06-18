@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pranesh Rai — Photographer &amp; Videographer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ============ TOKENS ============ */
+:root{
+  --bg:        #121212;
+  --bg-raised: #1A1A18;
+  --card:      #201F1C;
+  --hairline:  #34322D;
+  --bone:      #EDE9E2;
+  --grey:      #8A857C;
+  --grey-dim:  #5C5950;
+  --accent:    #C5402C;
+  --accent-dim: #7A2A1F;
+
+  --display: 'Fraunces', serif;
+  --display-bold: 'Archivo Black', sans-serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'Space Mono', monospace;
+
+  --frame-margin: 28px;
+}
+
+@media (max-width: 720px){
+  :root{ --frame-margin: 16px; }
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--bone);
+  font-family:var(--body);
+  font-weight:400;
+  overflow-x:hidden;
+  position:relative;
+}
+
+::selection{ background:var(--accent); color:var(--bone); }
+
+a{ color:inherit; text-decoration:none; }
+
+img{ max-width:100%; display:block; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* ============ VIEWFINDER HUD (signature element) ============ */
+.hud{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  pointer-events:none;
+}
+.hud-corner{
+  position:absolute;
+  width:22px;
+  height:22px;
+  border-color:var(--grey-dim);
+  opacity:0.85;
+  transition:border-color 0.6s ease, opacity 0.6s ease;
+}
+.hud-corner.tl{ top:var(--frame-margin); left:var(--frame-margin); border-top:1.5px solid; border-left:1.5px solid; }
+.hud-corner.tr{ top:var(--frame-margin); right:var(--frame-margin); border-top:1.5px solid; border-right:1.5px solid; }
+.hud-corner.bl{ bottom:var(--frame-margin); left:var(--frame-margin); border-bottom:1.5px solid; border-left:1.5px solid; }
+.hud-corner.br{ bottom:var(--frame-margin); right:var(--frame-margin); border-bottom:1.5px solid; border-right:1.5px solid; }
+
+.hud.live .hud-corner{ border-color:var(--accent); opacity:1; }
+
+.hud-readout{
+  position:absolute;
+  top:var(--frame-margin);
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:var(--grey-dim);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  white-space:nowrap;
+  transition:color 0.6s ease;
+}
+.hud.live .hud-readout{ color:var(--grey); }
+
+.tally-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--grey-dim);
+  transition:background 0.4s ease, box-shadow 0.4s ease;
+}
+.hud.live .tally-dot{
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.45; }
+}
+
+.hud-mode{
+  position:absolute;
+  bottom:var(--frame-margin);
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:var(--grey-dim);
+  transition:color 0.6s ease;
+}
+.hud.live .hud-mode{ color:var(--grey); }
+
+/* ============ NAV ============ */
+nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:150;
+  padding-top:48px;
+}
+nav .nav-inner{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 var(--frame-margin);
+  pointer-events:auto;
+}
+.logo{
+  font-family:var(--display);
+  font-size:18px;
+  letter-spacing:0.02em;
+  font-weight:450;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+.logo .dot{ color:var(--accent); }
+.logo-studio{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  color:var(--grey-dim);
+  font-weight:400;
+}
+@media (max-width:560px){
+  .logo-studio{ display:none; }
+}
+
+.nav-links{
+  display:flex;
+  gap:32px;
+  font-size:13px;
+  letter-spacing:0.04em;
+  color:var(--grey);
+}
+.nav-links a{
+  position:relative;
+  padding-bottom:4px;
+}
+.nav-links a:hover{ color:var(--bone); }
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  left:0; bottom:0;
+  width:0; height:1px;
+  background:var(--accent);
+  transition:width 0.3s ease;
+}
+.nav-links a:hover::after{ width:100%; }
+
+@media (max-width: 720px){
+  .nav-links{ display:none; }
+}
+
+/* ============ HERO ============ */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 var(--frame-margin);
+  position:relative;
+}
+
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.12em;
+  color:var(--accent);
+  margin-bottom:28px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.hero-eyebrow::before{
+  content:'';
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+.hero-name{
+  font-family:var(--display-bold);
+  font-weight:400;
+  font-size:clamp(56px, 12.5vw, 160px);
+  line-height:0.94;
+  letter-spacing:-0.01em;
+  max-width:1300px;
+}
+
+.studio-tag{
+  display:block;
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:clamp(13px, 1.6vw, 18px);
+  letter-spacing:0.22em;
+  color:var(--accent);
+  margin-top:18px;
+}
+.studio-tag::before{
+  content:'— ';
+  color:var(--grey-dim);
+}
+
+.hero-roles{
+  margin-top:36px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 0;
+  max-width:760px;
+}
+.hero-roles span{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.04em;
+  color:var(--grey);
+  padding:0 16px;
+  border-left:1px solid var(--hairline);
+}
+.hero-roles span:first-child{
+  padding-left:0;
+  border-left:none;
+}
+@media (max-width:720px){
+  .hero-roles span{
+    border-left:none;
+    padding:0;
+    width:100%;
+  }
+}
+
+.hero-meta{
+  margin-top:56px;
+  display:flex;
+  gap:48px;
+  flex-wrap:wrap;
+}
+.hero-meta-item{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--grey-dim);
+  letter-spacing:0.06em;
+}
+.hero-meta-item strong{
+  display:block;
+  font-family:var(--body);
+  font-size:14px;
+  color:var(--bone);
+  font-weight:500;
+  margin-top:6px;
+  letter-spacing:0;
+}
+
+.scroll-cue{
+  position:absolute;
+  bottom:90px;
+  left:var(--frame-margin);
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--grey-dim);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.scroll-cue .line{
+  width:1px; height:32px;
+  background:linear-gradient(to bottom, var(--grey-dim), transparent);
+  animation:scrollline 2s ease-in-out infinite;
+}
+@keyframes scrollline{
+  0%{ transform:scaleY(0); transform-origin:top; }
+  50%{ transform:scaleY(1); transform-origin:top; }
+  50.01%{ transform-origin:bottom; }
+  100%{ transform:scaleY(0); transform-origin:bottom; }
+}
+
+/* ============ SECTION SCAFFOLDING ============ */
+section{
+  padding:140px var(--frame-margin);
+  position:relative;
+}
+@media (max-width:720px){
+  section{ padding:90px var(--frame-margin); }
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:64px;
+  gap:24px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--hairline);
+  padding-bottom:28px;
+}
+.section-num{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:0.1em;
+}
+.section-title{
+  font-family:var(--display);
+  font-size:clamp(32px, 5vw, 56px);
+  font-weight:450;
+  letter-spacing:-0.01em;
+}
+.section-note{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--grey-dim);
+  letter-spacing:0.05em;
+  max-width:240px;
+  text-align:right;
+}
+@media (max-width:720px){
+  .section-note{ text-align:left; max-width:100%; }
+}
+
+/* ============ CONTACT SHEET (work grid) ============ */
+.contact-sheet{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:2px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+}
+@media (max-width:980px){
+  .contact-sheet{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (max-width:560px){
+  .contact-sheet{ grid-template-columns:1fr; }
+}
+
+.frame{
+  position:relative;
+  aspect-ratio:4/5;
+  background:var(--bg-raised);
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.frame-art{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.7s cubic-bezier(.22,.61,.36,1);
+}
+.frame:hover .frame-art{ transform:scale(1.06); }
+
+.frame-tag{
+  position:absolute;
+  top:14px; left:14px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.08em;
+  color:rgba(237,233,226,0.55);
+  z-index:2;
+}
+.frame-tag.video::before{
+  content:'● ';
+  color:var(--accent);
+}
+
+.frame-num{
+  position:absolute;
+  bottom:14px; left:14px;
+  font-family:var(--mono);
+  font-size:10px;
+  color:rgba(237,233,226,0.35);
+  z-index:2;
+}
+
+.frame-caption{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:18px 16px;
+  background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  transform:translateY(8px);
+  opacity:0;
+  transition:opacity 0.35s ease, transform 0.35s ease;
+  z-index:2;
+}
+.frame:hover .frame-caption{ opacity:1; transform:translateY(0); }
+.frame-caption .title{ font-size:13px; font-weight:500; }
+.frame-caption .meta{ font-family:var(--mono); font-size:10px; color:var(--grey); margin-top:3px; }
+
+/* generated placeholder art per-frame (distinct gradients standing in for real photos) */
+.tone-1{ background:radial-gradient(circle at 30% 20%, #3a2a23, #161412 70%); }
+.tone-2{ background:linear-gradient(160deg, #2b1c18, #14110f 60%); }
+.tone-3{ background:radial-gradient(circle at 70% 70%, #33231d, #131110 65%); }
+.tone-4{ background:linear-gradient(200deg, #261b16, #100e0c); }
+.tone-5{ background:radial-gradient(circle at 50% 30%, #3d2419, #15110f 70%); }
+.tone-6{ background:linear-gradient(140deg, #221a14, #12100e); }
+.tone-7{ background:radial-gradient(circle at 20% 80%, #36241b, #131210 65%); }
+.tone-8{ background:linear-gradient(190deg, #2a1d17, #110f0d); }
+
+.frame-mono-icon{
+  width:38px; height:38px;
+  opacity:0.18;
+}
+
+/* ============ ABOUT ============ */
+.about{
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:80px;
+  align-items:start;
+}
+@media (max-width:900px){
+  .about{ grid-template-columns:1fr; gap:48px; }
+}
+.about-body p{
+  font-size:18px;
+  line-height:1.75;
+  color:var(--grey);
+  max-width:560px;
+  margin-bottom:24px;
+}
+.about-body p strong{ color:var(--bone); font-weight:500; }
+
+.specs{
+  border-top:1px solid var(--hairline);
+}
+.spec-row{
+  display:flex;
+  justify-content:space-between;
+  padding:18px 0;
+  border-bottom:1px solid var(--hairline);
+  font-size:14px;
+}
+.spec-row .k{ color:var(--grey); }
+.spec-row .v{ font-family:var(--mono); font-size:13px; text-align:right; }
+
+.specs-col{
+  display:flex;
+  flex-direction:column;
+}
+
+.software-tab{
+  margin-top:40px;
+}
+.software-tab-label{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+.software-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.software-tags span{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.02em;
+  color:var(--bone);
+  padding:9px 14px;
+  border:1px solid var(--hairline);
+  background:var(--card);
+}
+
+/* ============ PROFESSIONAL EXPERIENCE ============ */
+.exp-block{
+  border:1px solid var(--hairline);
+}
+.exp-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:16px;
+  padding:36px 40px;
+  border-bottom:1px solid var(--hairline);
+}
+.exp-head h3{
+  font-family:var(--display);
+  font-weight:450;
+  font-size:clamp(24px, 3vw, 32px);
+}
+.exp-years{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.06em;
+  color:var(--accent);
+  white-space:nowrap;
+}
+
+.exp-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+}
+@media (max-width:720px){
+  .exp-grid{ grid-template-columns:1fr; }
+}
+.exp-item{
+  font-size:15px;
+  font-weight:500;
+  padding:26px 40px;
+  border-bottom:1px solid var(--hairline);
+  display:flex;
+  align-items:baseline;
+  gap:18px;
+}
+.exp-item:nth-child(odd){
+  border-right:1px solid var(--hairline);
+}
+@media (max-width:720px){
+  .exp-item:nth-child(odd){ border-right:none; }
+}
+.exp-item:nth-last-child(1),
+.exp-item:nth-last-child(2){
+  border-bottom:none;
+}
+.exp-num{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--accent);
+  flex-shrink:0;
+}
+
+/* ============ SERVICES (dual medium) ============ */
+.mediums{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+}
+@media (max-width:800px){
+  .mediums{ grid-template-columns:1fr; }
+}
+.medium{
+  background:var(--bg);
+  padding:56px 44px;
+  position:relative;
+}
+.medium-icon{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--accent);
+  letter-spacing:0.1em;
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.medium-icon .ring{
+  width:14px; height:14px;
+  border-radius:50%;
+  border:1.5px solid var(--accent);
+}
+.medium-icon .square{
+  width:12px; height:12px;
+  background:var(--accent);
+}
+.medium h3{
+  font-family:var(--display);
+  font-size:30px;
+  font-weight:450;
+  margin-bottom:16px;
+}
+.medium p{
+  color:var(--grey);
+  font-size:15px;
+  line-height:1.7;
+  margin-bottom:24px;
+}
+.medium ul{
+  list-style:none;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--grey-dim);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.medium ul li::before{ content:'— '; color:var(--accent); }
+
+/* ============ PROCESS ============ */
+.process-list{
+  display:flex;
+  flex-direction:column;
+}
+.process-item{
+  display:grid;
+  grid-template-columns:80px 1fr 1fr;
+  gap:32px;
+  padding:32px 0;
+  border-bottom:1px solid var(--hairline);
+  align-items:baseline;
+}
+@media (max-width:800px){
+  .process-item{ grid-template-columns:50px 1fr; }
+  .process-item .process-desc{ grid-column:2; margin-top:8px; }
+}
+.process-time{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--accent);
+}
+.process-title{
+  font-family:var(--display);
+  font-size:24px;
+  font-weight:450;
+}
+.process-desc{
+  color:var(--grey);
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* ============ MISSION STATEMENT ============ */
+.testimonial{
+  border-top:1px solid var(--hairline);
+  border-bottom:1px solid var(--hairline);
+  padding:90px var(--frame-margin);
+  text-align:center;
+}
+.mission-label{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.18em;
+  color:var(--accent);
+  margin-bottom:24px;
+}
+.testimonial blockquote{
+  font-family:var(--display);
+  font-style:normal;
+  font-weight:450;
+  font-size:clamp(24px, 4vw, 38px);
+  line-height:1.4;
+  max-width:760px;
+  margin:0 auto;
+  color:var(--bone);
+}
+
+/* ============ CONTACT ============ */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:80px;
+}
+@media (max-width:900px){
+  .contact-grid{ grid-template-columns:1fr; gap:56px; }
+}
+.contact-big{
+  font-family:var(--display);
+  font-size:clamp(36px, 6vw, 68px);
+  font-weight:450;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+}
+.contact-big a{
+  color:var(--bone);
+  border-bottom:1.5px solid var(--accent);
+  transition:color 0.3s ease;
+}
+.contact-big a:hover{ color:var(--accent); }
+
+.contact-links{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  margin-top:40px;
+}
+.contact-links a{
+  font-size:14px;
+  color:var(--grey);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transition:color 0.25s ease;
+}
+.contact-links a:hover{ color:var(--bone); }
+.contact-links a::after{
+  content:'↗';
+  font-size:12px;
+  color:var(--accent);
+}
+
+.contact-side .spec-row{ font-size:13px; }
+
+footer{
+  padding:32px var(--frame-margin) 110px;
+  display:flex;
+  justify-content:space-between;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--grey-dim);
+  letter-spacing:0.04em;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible{
+  outline:1.5px solid var(--accent);
+  outline-offset:3px;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SIGNATURE HUD OVERLAY ===== -->
+<div class="hud" id="hud">
+  <div class="hud-corner tl"></div>
+  <div class="hud-corner tr"></div>
+  <div class="hud-corner bl"></div>
+  <div class="hud-corner br"></div>
+  <div class="hud-readout">
+    <span class="tally-dot" id="tallyDot"></span>
+    <span id="hudFstop">f/2.8</span>
+  </div>
+  <div class="hud-mode" id="hudMode">VIEWING — STILL</div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">PRANESH RAI<span class="dot">.</span> <span class="logo-studio">HANGRIM FILMS</span></div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">BASED IN KATHMANDU — WORKING ALL OVER NEPAL</div>
+  <h1 class="hero-name">PRANESH<br>RAI<span class="studio-tag">HANGRIM FILMS</span></h1>
+  <div class="hero-roles">
+    <span>Cinematographer</span>
+    <span>Video Editor</span>
+    <span>Documentary Filmmaker</span>
+    <span>Photographer</span>
+    <span>Drone / FPV Pilot</span>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-meta-item">EXPERIENCE<strong>3+ years</strong></div>
+    <div class="hero-meta-item">FORMATS<strong>Stills / Film / Aerial</strong></div>
+    <div class="hero-meta-item">BASED IN<strong>Kathmandu, NP</strong></div>
+    <div class="hero-meta-item">AVAILABLE FOR<strong>2026 bookings</strong></div>
+  </div>
+  <div class="scroll-cue"><div class="line"></div>SCROLL</div>
+</section>
+
+<!-- ===== WORK / CONTACT SHEET ===== -->
+<section id="work">
+  <div class="section-head">
+    <div>
+      <div class="section-num">01 — SELECTED WORK</div>
+      <h2 class="section-title">The contact sheet</h2>
+    </div>
+    <div class="section-note">A running edit of recent stills and film work, mixed the way they actually happen on set — back to back, same roll.</div>
+  </div>
+
+  <div class="contact-sheet" id="contactSheet">
+    <!-- Frame 1 -->
+    <div class="frame" data-mode="photo">
+      <div class="frame-art tone-1"></div>
+      <div class="frame-tag">35MM · f/1.8</div>
+      <div class="frame-num">001</div>
+      <div class="frame-caption"><div class="title">Dhulikhel, Morning Light</div><div class="meta">Editorial — Portrait</div></div>
+    </div>
+    <!-- Frame 2 -->
+    <div class="frame" data-mode="video">
+      <div class="frame-art tone-2"></div>
+      <div class="frame-tag video">24FPS · ANAMORPHIC</div>
+      <div class="frame-num">002</div>
+      <div class="frame-caption"><div class="title">Saanvi &amp; Rohan — Film</div><div class="meta">Wedding Feature, 4:32</div></div>
+    </div>
+    <!-- Frame 3 -->
+    <div class="frame" data-mode="photo">
+      <div class="frame-art tone-3"></div>
+      <div class="frame-tag">85MM · f/2.0</div>
+      <div class="frame-num">003</div>
+      <div class="frame-caption"><div class="title">Patan Durbar, Dusk</div><div class="meta">Documentary</div></div>
+    </div>
+    <!-- Frame 4 -->
+    <div class="frame" data-mode="photo">
+      <div class="frame-art tone-4"></div>
+      <div class="frame-tag">50MM · f/1.4</div>
+      <div class="frame-num">004</div>
+      <div class="frame-caption"><div class="title">Tea House, Solukhumbu</div><div class="meta">Travel — Series</div></div>
+    </div>
+    <!-- Frame 5 -->
+    <div class="frame" data-mode="video">
+      <div class="frame-art tone-5"></div>
+      <div class="frame-tag video">24FPS · HANDHELD</div>
+      <div class="frame-num">005</div>
+      <div class="frame-caption"><div class="title">Yatra Coffee — Brand Film</div><div class="meta">Commercial, 1:48</div></div>
+    </div>
+    <!-- Frame 6 -->
+    <div class="frame" data-mode="photo">
+      <div class="frame-art tone-6"></div>
+      <div class="frame-tag">35MM · f/2.8</div>
+      <div class="frame-num">006</div>
+      <div class="frame-caption"><div class="title">Indra Jatra, Crowd</div><div class="meta">Documentary</div></div>
+    </div>
+    <!-- Frame 7 -->
+    <div class="frame" data-mode="video">
+      <div class="frame-art tone-7"></div>
+      <div class="frame-tag video">24FPS · GIMBAL</div>
+      <div class="frame-num">007</div>
+      <div class="frame-caption"><div class="title">Pokhara Lakeside — Reel</div><div class="meta">Tourism Board, 0:58</div></div>
+    </div>
+    <!-- Frame 8 -->
+    <div class="frame" data-mode="photo">
+      <div class="frame-art tone-8"></div>
+      <div class="frame-tag">105MM · f/2.5</div>
+      <div class="frame-num">008</div>
+      <div class="frame-caption"><div class="title">Studio, Available Light</div><div class="meta">Portrait — Series</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="section-head">
+    <div>
+      <div class="section-num">02 — ABOUT</div>
+      <h2 class="section-title">About me</h2>
+    </div>
+  </div>
+  <div class="about">
+    <div class="about-body">
+      <p>My name is <strong>Pranesh Rai</strong>, originally from Bhojpur in eastern Nepal and currently based in Kathmandu. I am a passionate <strong>Cinematographer, Video Editor, Documentary Filmmaker, Photographer, and Drone/FPV Pilot</strong> with over 3 years of professional experience in visual storytelling.</p>
+      <p>I enjoy capturing authentic moments and transforming them into compelling visual narratives that connect with audiences. For me, the camera is more than just a tool — it is a medium for creativity, expression, and storytelling. Through documentaries, music videos, promotional content, and cinematic productions, I strive to create meaningful and visually engaging content that leaves a lasting impact.</p>
+      <p>I am deeply interested in exploring different perspectives, emotions, cultures, and stories through filmmaking. With a strong commitment to quality, creativity, and continuous learning, I constantly refine my skills to deliver professional and impactful visual experiences.</p>
+    </div>
+    <div class="specs-col">
+      <div class="specs">
+        <div class="spec-row"><span class="k">Camera</span><span class="v">Sony A7 IV</span></div>
+        <div class="spec-row"><span class="k">Gimbal</span><span class="v">DJI RS 3</span></div>
+        <div class="spec-row"><span class="k">Drone</span><span class="v">DJI Flip</span></div>
+        <div class="spec-row"><span class="k">Travels for work</span><span class="v">Yes</span></div>
+      </div>
+      <div class="software-tab">
+        <div class="software-tab-label">CORE SKILLS</div>
+        <div class="software-tags">
+          <span>Cinematography</span>
+          <span>Video Editing</span>
+          <span>Documentary Production</span>
+          <span>Visual Storytelling</span>
+          <span>Drone/FPV Operations</span>
+          <span>Photography</span>
+          <span>Color Grading</span>
+          <span>Motion Graphics</span>
+          <span>Creative Direction</span>
+          <span>Content Production</span>
+        </div>
+      </div>
+      <div class="software-tab">
+        <div class="software-tab-label">SOFTWARE SKILLS</div>
+        <div class="software-tags">
+          <span>Adobe Premiere Pro</span>
+          <span>Adobe After Effects</span>
+          <span>DaVinci Resolve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROFESSIONAL EXPERIENCE ===== -->
+<section id="experience">
+  <div class="section-head">
+    <div>
+      <div class="section-num">03 — PROFESSIONAL EXPERIENCE</div>
+      <h2 class="section-title">What I bring to a project</h2>
+    </div>
+    <div class="section-note">A working skill set built across music videos, documentaries, brand work, and live events.</div>
+  </div>
+
+  <div class="exp-block">
+    <div class="exp-head">
+      <h3>Cinematography &amp; Video Editing</h3>
+      <span class="exp-years">3+ Years of Experience</span>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-item"><span class="exp-num">01</span>Music Video Production</div>
+      <div class="exp-item"><span class="exp-num">02</span>Documentary Filmmaking</div>
+      <div class="exp-item"><span class="exp-num">03</span>Commercial &amp; Promotional Videos</div>
+      <div class="exp-item"><span class="exp-num">04</span>Event Coverage</div>
+      <div class="exp-item"><span class="exp-num">05</span>Photography</div>
+      <div class="exp-item"><span class="exp-num">06</span>Drone &amp; FPV Cinematography</div>
+      <div class="exp-item"><span class="exp-num">07</span>Post-Production &amp; Color Grading</div>
+      <div class="exp-item"><span class="exp-num">08</span>Motion Graphics &amp; Visual Effects</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== SERVICES / MEDIUMS ===== -->
+<section id="services">
+  <div class="section-head">
+    <div>
+      <div class="section-num">04 — SERVICES</div>
+      <h2 class="section-title">Two mediums, one eye</h2>
+    </div>
+    <div class="section-note">Booked separately or together — most clients end up wanting both once they see the film.</div>
+  </div>
+  <div class="mediums">
+    <div class="medium">
+      <div class="medium-icon"><span class="ring"></span> STILL</div>
+      <h3>Photography</h3>
+      <p>Considered, available-light photography for people and brands who want images that hold up over time — not just over a feed.</p>
+      <ul>
+        <li>Wedding &amp; event coverage</li>
+        <li>Editorial &amp; portrait sessions</li>
+        <li>Documentary &amp; travel stories</li>
+        <li>Brand &amp; product photography</li>
+      </ul>
+    </div>
+    <div class="medium">
+      <div class="medium-icon"><span class="square"></span> MOTION</div>
+      <h3>Videography</h3>
+      <p>Handheld, observational films built in the edit, not just the shoot — built around what actually happened, not a shot list followed too closely.</p>
+      <ul>
+        <li>Wedding feature films</li>
+        <li>Brand &amp; commercial films</li>
+        <li>Documentary shorts</li>
+        <li>Social &amp; reel-length cuts</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="section-head">
+    <div>
+      <div class="section-num">05 — PROCESS</div>
+      <h2 class="section-title">How a project runs</h2>
+    </div>
+  </div>
+  <div class="process-list">
+    <div class="process-item">
+      <div class="process-time">WEEK 1</div>
+      <div class="process-title">Call &amp; scout</div>
+      <div class="process-desc">A real conversation about what the day or the brand actually needs — followed by a site visit or reference pull, not a template questionnaire.</div>
+    </div>
+    <div class="process-item">
+      <div class="process-time">SHOOT DAY</div>
+      <div class="process-title">On location</div>
+      <div class="process-desc">Pranesh shoots stills and motion in the same pass where possible, so nothing gets restaged for the second camera.</div>
+    </div>
+    <div class="process-item">
+      <div class="process-time">WEEK 2–3</div>
+      <div class="process-title">First edit</div>
+      <div class="process-desc">A culled photo gallery arrives first, followed by a rough cut of any film work for notes before final color and sound.</div>
+    </div>
+    <div class="process-item">
+      <div class="process-time">WEEK 3–4</div>
+      <div class="process-title">Delivery</div>
+      <div class="process-desc">Final, color-graded stills and a finished film, delivered in whatever formats the platform — print, web, or screen — actually needs.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MISSION ===== -->
+<section class="testimonial">
+  <div class="mission-label">MISSION</div>
+  <blockquote>To create powerful visual stories that inspire, engage, and leave a lasting impression through creativity, authenticity, and cinematic excellence.</blockquote>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="section-head">
+    <div>
+      <div class="section-num">06 — CONTACT</div>
+      <h2 class="section-title">Get in touch</h2>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-big">Have a date,<br>a brand, or a<br>story in mind?<br><a href="mailto:hello@praneshrai.com">Let's talk →</a></div>
+      <div class="contact-links">
+        <a href="mailto:hello@praneshrai.com">hello@praneshrai.com</a>
+        <a href="#">Instagram</a>
+        <a href="#">Vimeo — film reel</a>
+      </div>
+    </div>
+    <div class="contact-side">
+      <div class="specs">
+        <div class="spec-row"><span class="k">Response time</span><span class="v">Within 48 hours</span></div>
+        <div class="spec-row"><span class="k">2026 calendar</span><span class="v">Booking now</span></div>
+        <div class="spec-row"><span class="k">Travel</span><span class="v">All over Nepal</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 PRANESH RAI — HANGRIM FILMS</div>
+  <div>CINEMA — DOCUMENTARY — STILLS — AERIAL</div>
+</footer>
+
+<script>
+// ===== HUD: tally light + fstop + mode react to whether a video or photo frame is centered =====
+(function(){
+  const hud = document.getElementById('hud');
+  const tallyDot = document.getElementById('tallyDot');
+  const hudFstop = document.getElementById('hudFstop');
+  const hudMode = document.getElementById('hudMode');
+  const frames = document.querySelectorAll('.frame');
+
+  const fstops = ['f/1.4','f/1.8','f/2.0','f/2.5','f/2.8'];
+  let fstopIndex = 0;
+
+  function setMode(mode){
+    if(mode === 'video'){
+      hud.classList.add('live');
+      hudMode.textContent = 'RECORDING — MOTION';
+      hudFstop.textContent = '24fps · f/2.0';
+    } else {
+      hud.classList.remove('live');
+      hudMode.textContent = 'VIEWING — STILL';
+      fstopIndex = (fstopIndex + 1) % fstops.length;
+      hudFstop.textContent = fstops[fstopIndex];
+    }
+  }
+
+  let lastMode = null;
+  const observer = new IntersectionObserver((entries)=>{
+    // find the most-visible frame currently intersecting
+    let best = null, bestRatio = 0;
+    entries.forEach(e=>{
+      if(e.isIntersecting && e.intersectionRatio > bestRatio){
+        bestRatio = e.intersectionRatio;
+        best = e.target;
+      }
+    });
+    if(best){
+      const mode = best.getAttribute('data-mode');
+      if(mode !== lastMode){
+        lastMode = mode;
+        setMode(mode);
+      }
+    }
+  }, { threshold: [0.4, 0.6, 0.8] });
+
+  frames.forEach(f=> observer.observe(f));
+
+  // reset to idle when work section is fully out of view
+  const work = document.getElementById('work');
+  const workObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting){
+        lastMode = null;
+        hud.classList.remove('live');
+        hudMode.textContent = 'STANDBY';
+        hudFstop.textContent = '—';
+      }
+    });
+  }, { threshold: 0 });
+  workObserver.observe(work);
+})();
+</script>
+
+</body>
+</html>
