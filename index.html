@@ -286,7 +286,7 @@ nav .nav-inner{
   object-fit:cover;
   object-position:center;
   z-index:0;
-  opacity:0.55;
+  opacity:0.65;
 }
 
 .hero-video-overlay{
@@ -295,10 +295,10 @@ nav .nav-inner{
   z-index:1;
   background:
     linear-gradient(to bottom,
-      rgba(18,18,18,0.55) 0%,
-      rgba(18,18,18,0.25) 40%,
-      rgba(18,18,18,0.55) 80%,
-      rgba(18,18,18,0.92) 100%
+      rgba(38,38,40,0.45) 0%,
+      rgba(38,38,40,0.18) 40%,
+      rgba(38,38,40,0.45) 80%,
+      rgba(28,28,30,0.82) 100%
     );
 }
 
@@ -410,18 +410,18 @@ nav .nav-inner{
 
 /* ============ SECTION SCAFFOLDING ============ */
 section{
-  padding:140px var(--frame-margin);
+  padding:88px var(--frame-margin);
   position:relative;
 }
 @media (max-width:720px){
-  section{ padding:72px var(--frame-margin); }
+  section{ padding:56px var(--frame-margin); }
 }
 
 #about{
-  padding-top:48px;
+  padding-top:40px;
 }
 @media (max-width:720px){
-  #about{ padding-top:32px; }
+  #about{ padding-top:28px; }
 }
 
 /* ============ SCROLL REVEAL ============ */
@@ -598,6 +598,34 @@ section{
   flex-direction:column;
 }
 
+.availability-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  padding:14px 16px;
+  border:1px solid var(--hairline);
+  background:var(--card);
+}
+.availability-row .k{
+  color:var(--grey);
+  font-size:13px;
+}
+.availability-row .v{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--bone);
+  margin-left:auto;
+}
+.availability-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  flex-shrink:0;
+}
+
 .software-tab{
   margin-top:40px;
 }
@@ -654,46 +682,67 @@ section{
 
 .exp-grid{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
+  grid-template-columns:repeat(4, 1fr);
+  gap:1px;
+  background:var(--hairline);
 }
-@media (max-width:720px){
+@media (max-width:980px){
+  .exp-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (max-width:560px){
   .exp-grid{ grid-template-columns:1fr; }
 }
 .exp-item{
-  font-size:15px;
-  font-weight:500;
-  padding:26px 40px;
-  border-bottom:1px solid var(--hairline);
+  position:relative;
+  font-size:14px;
+  font-weight:600;
+  padding:32px 24px 26px;
+  background:var(--bg);
   display:flex;
-  align-items:baseline;
+  flex-direction:column;
   gap:18px;
-  transition:background 0.25s ease, color 0.25s ease;
+  transition:background 0.3s ease, transform 0.3s ease;
   cursor:default;
+  overflow:hidden;
 }
 .exp-item:hover{
   background:var(--bg-raised);
+  transform:translateY(-3px);
+}
+.exp-item-icon{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--accent-dim);
   color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-.exp-item:nth-child(odd){
-  border-right:1px solid var(--hairline);
+.exp-item-icon svg{
+  width:17px;
+  height:17px;
 }
-@media (max-width:720px){
-  .exp-item{ padding:20px 24px; }
-  .exp-item:nth-child(odd){ border-right:none; }
-}
-.exp-item:nth-last-child(1),
-.exp-item:nth-last-child(2){
-  border-bottom:none;
+.exp-item:hover .exp-item-icon{
+  background:var(--accent);
+  color:#121212;
+  box-shadow:0 0 18px rgba(212,175,55,0.35);
 }
 .exp-num{
+  position:absolute;
+  top:14px;
+  right:18px;
   font-family:var(--mono);
-  font-size:12px;
-  color:var(--accent);
-  flex-shrink:0;
-  transition:color 0.25s ease;
+  font-size:30px;
+  font-weight:500;
+  color:var(--bone);
+  opacity:0.04;
+  line-height:1;
+  transition:opacity 0.3s ease;
 }
 .exp-item:hover .exp-num{
-  color:var(--bone);
+  opacity:0.08;
 }
 
 /* ============ SERVICES (dual medium) ============ */
@@ -711,10 +760,32 @@ section{
   background:var(--bg);
   padding:56px 44px;
   position:relative;
+  overflow:hidden;
+  transition:background 0.35s ease;
+  border-top:2px solid transparent;
+}
+.medium:hover{
+  background:var(--bg-raised);
+  border-top-color:var(--accent);
 }
 @media (max-width:720px){
   .medium{ padding:36px 24px; }
 }
+.medium-watermark{
+  position:absolute;
+  top:-10px;
+  right:8px;
+  width:120px;
+  height:120px;
+  opacity:0.03;
+  color:var(--bone);
+  pointer-events:none;
+  transition:opacity 0.35s ease;
+}
+.medium:hover .medium-watermark{
+  opacity:0.06;
+}
+.medium-watermark svg{ width:100%; height:100%; }
 .medium-icon{
   font-family:var(--mono);
   font-size:12px;
@@ -724,6 +795,8 @@ section{
   display:flex;
   align-items:center;
   gap:8px;
+  position:relative;
+  z-index:1;
 }
 .medium-icon .ring{
   width:14px; height:14px;
@@ -739,50 +812,121 @@ section{
   font-size:30px;
   font-weight:900;
   margin-bottom:16px;
+  position:relative;
+  z-index:1;
 }
 .medium p{
   color:var(--grey);
   font-size:15px;
   line-height:1.7;
-  margin-bottom:24px;
+  margin-bottom:28px;
+  position:relative;
+  z-index:1;
+  max-width:420px;
 }
 .medium ul{
   list-style:none;
-  font-family:var(--mono);
-  font-size:12px;
-  color:var(--grey-dim);
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:2px;
+  position:relative;
+  z-index:1;
 }
-.medium ul li::before{ content:'— '; color:var(--accent); }
+.medium ul li{
+  font-family:var(--mono);
+  font-size:12.5px;
+  color:var(--grey);
+  padding:11px 0;
+  border-top:1px solid var(--hairline);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transition:color 0.25s ease, padding-left 0.25s ease;
+}
+.medium ul li:first-child{
+  border-top:none;
+}
+.medium ul li::before{
+  content:'';
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  flex-shrink:0;
+}
+.medium ul li:hover{
+  color:var(--bone);
+  padding-left:4px;
+}
 
 /* ============ PROCESS ============ */
 .process-list{
   display:flex;
   flex-direction:column;
+  position:relative;
 }
 .process-item{
   display:grid;
-  grid-template-columns:80px 1fr 1fr;
+  grid-template-columns:64px 1fr 1fr;
   gap:32px;
-  padding:32px 0;
-  border-bottom:1px solid var(--hairline);
-  align-items:baseline;
+  padding:36px 0;
+  position:relative;
+}
+.process-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  left:31px;
+  top:68px;
+  bottom:-4px;
+  width:1px;
+  background:var(--hairline);
 }
 @media (max-width:800px){
-  .process-item{ grid-template-columns:50px 1fr; }
+  .process-item{ grid-template-columns:48px 1fr; }
   .process-item .process-desc{ grid-column:2; margin-top:8px; }
+  .process-item:not(:last-child)::after{ left:23px; }
+}
+.process-marker{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  border:1.5px solid var(--hairline);
+  background:var(--card);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--mono);
+  font-size:18px;
+  font-weight:500;
+  color:var(--accent);
+  flex-shrink:0;
+  position:relative;
+  z-index:1;
+  transition:border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.process-item:hover .process-marker{
+  border-color:var(--accent);
+  background:var(--accent-dim);
+  transform:scale(1.06);
+}
+@media (max-width:800px){
+  .process-marker{
+    width:48px;
+    height:48px;
+    font-size:14px;
+  }
 }
 .process-time{
   font-family:var(--mono);
   font-size:11px;
   color:var(--accent);
+  letter-spacing:0.04em;
 }
 .process-title{
   font-family:var(--display);
   font-size:24px;
   font-weight:900;
+  margin-top:6px;
 }
 .process-desc{
   color:var(--grey);
@@ -794,143 +938,192 @@ section{
 .testimonial{
   border-top:1px solid var(--hairline);
   border-bottom:1px solid var(--hairline);
-  padding:90px var(--frame-margin);
+  padding:80px var(--frame-margin);
   text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.testimonial::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:380px;
+  height:380px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%);
+  pointer-events:none;
 }
 .mission-label{
   font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:0.18em;
+  font-size:11px;
+  letter-spacing:0.22em;
   color:var(--accent);
-  margin-bottom:24px;
+  margin-bottom:28px;
+  position:relative;
+  z-index:1;
+}
+.mission-mark{
+  font-family:var(--display);
+  font-size:40px;
+  color:var(--accent);
+  opacity:0.4;
+  line-height:1;
+  margin-bottom:14px;
+  position:relative;
+  z-index:1;
 }
 .testimonial blockquote{
-  font-family:var(--display);
-  font-style:italic;
-  font-weight:900;
-  font-size:clamp(22px, 3.5vw, 36px);
-  line-height:1.45;
-  max-width:760px;
+  font-family:var(--body);
+  font-style:normal;
+  font-weight:400;
+  font-size:clamp(15px, 1.8vw, 18px);
+  line-height:1.9;
+  max-width:600px;
   margin:0 auto;
-  color:var(--bone);
-  letter-spacing:-0.01em;
-}
-
-/* ============ CONTACT ============ */
-.contact-grid{
-  display:grid;
-  grid-template-columns:1.2fr 0.8fr;
-  gap:80px;
-}
-.contact-grid--single{
-  grid-template-columns:1fr;
-  max-width:720px;
-}
-@media (max-width:900px){
-  .contact-grid{ grid-template-columns:1fr; gap:56px; }
-}
-.contact-big{
-  font-family:var(--display);
-  font-size:clamp(36px, 6vw, 68px);
-  font-weight:900;
-  line-height:1.05;
-  letter-spacing:-0.01em;
-}
-.contact-big a{
-  color:var(--bone);
-  border-bottom:1.5px solid var(--accent);
-  transition:color 0.3s ease;
-}
-.contact-big a:hover{ color:var(--accent); }
-
-.contact-links{
-  display:flex;
-  justify-content:center;
-  align-items:stretch;
-  flex-wrap:wrap;
-  gap:16px;
-  margin-top:64px;
-}
-.contact-link{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:24px 28px 24px 36px;
-  border:1px solid var(--hairline);
-  background:var(--card);
-  min-width:280px;
-  position:relative;
-  transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-}
-.contact-link:hover{
-  border-color:var(--accent);
-  background:var(--bg-raised);
-  transform:translateY(-4px);
-  box-shadow:0 12px 40px rgba(212,175,55,0.1);
-}
-.contact-link-main{
-  display:flex;
-  align-items:center;
-  gap:18px;
-  flex:1;
-  min-width:0;
-}
-.contact-icon{
-  width:46px;
-  height:46px;
-  flex-shrink:0;
-  border-radius:50%;
-  background:var(--accent-dim);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--accent);
-  transition:background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-.contact-icon svg{
-  width:20px;
-  height:20px;
-}
-.contact-link:hover .contact-icon{
-  background:var(--accent);
-  color:#121212;
-  box-shadow:0 0 20px rgba(212,175,55,0.4);
-}
-.contact-text{
-  font-family:var(--mono);
-  font-size:15px;
+  color:var(--grey);
   letter-spacing:0.01em;
-  color:var(--bone);
-  font-weight:500;
-  flex:1;
+  position:relative;
+  z-index:1;
 }
 
-.contact-link--phone{
-  cursor:default;
+/* ============ CONTACT (gold section) ============ */
+.contact-gold{
+  background:linear-gradient(160deg, #C9A646 0%, #BF9A52 45%, #B08A4A 100%);
+  padding:120px var(--frame-margin);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
-.contact-numbers{
+@media (max-width:720px){
+  .contact-gold{ padding:80px var(--frame-margin); }
+}
+.contact-gold::before{
+  content:'';
+  position:absolute;
+  top:-15%;
+  right:-8%;
+  width:46%;
+  height:70%;
+  background:radial-gradient(ellipse at center, rgba(255,255,255,0.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+.contact-gold-inner{
+  position:relative;
+  z-index:1;
+  max-width:780px;
+  margin:0 auto;
+}
+.contact-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.2em;
+  color:rgba(18,18,18,0.65);
+  margin-bottom:28px;
+}
+.contact-headline{
+  font-family:var(--display-bold);
+  font-weight:900;
+  font-size:clamp(32px, 6vw, 64px);
+  line-height:1.08;
+  color:#121212;
+  letter-spacing:0;
+}
+.contact-subtext{
+  margin-top:24px;
+  font-family:var(--body);
+  font-size:16px;
+  color:rgba(18,18,18,0.7);
+  max-width:420px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.contact-email-wrap{
+  margin-top:48px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:var(--bone);
+  border-radius:999px;
+  padding:6px 8px 6px 28px;
+  box-shadow:0 14px 36px rgba(18,18,18,0.18);
+}
+.contact-email-pill{
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:0.04em;
+  font-weight:600;
+  color:#121212;
+  white-space:nowrap;
+}
+@media (max-width:560px){
+  .contact-email-wrap{
+    padding:6px 6px 6px 18px;
+  }
+  .contact-email-pill{
+    font-size:11px;
+  }
+}
+.copy-btn--gold{
+  background:#121212;
+  color:var(--accent);
+  border-radius:999px;
+  width:34px;
+  height:34px;
+}
+.copy-btn--gold:hover,
+.copy-btn--gold:focus-visible{
+  background:#1c1c1c;
+  color:var(--accent);
+}
+.copy-btn--gold .copy-tooltip{
+  background:#121212;
+  border-color:rgba(255,255,255,0.12);
+  color:var(--bone);
+}
+
+.contact-row{
+  margin-top:40px;
   display:flex;
-  flex-direction:column;
-  flex:1;
-  margin-left:10px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:36px;
 }
-.contact-number-row{
+.contact-row-item{
   display:flex;
   align-items:center;
   gap:10px;
+  color:rgba(18,18,18,0.75);
 }
-.contact-number{
+.contact-row-item svg{
+  width:16px;
+  height:16px;
+  flex-shrink:0;
+}
+.contact-row-item a{
   font-family:var(--mono);
-  font-size:15px;
-  letter-spacing:0.01em;
-  color:var(--bone);
-  font-weight:500;
-  transition:color 0.2s ease;
-  padding:6px 0;
-  display:inline-block;
+  font-size:13px;
+  letter-spacing:0.03em;
+  color:#121212;
+  font-weight:600;
+  transition:opacity 0.2s ease;
 }
-.contact-number:hover{
-  color:var(--accent);
+.contact-row-item a:hover{
+  opacity:0.65;
+}
+.contact-row-item .copy-btn{
+  color:rgba(18,18,18,0.45);
+}
+.contact-row-item .copy-btn:hover,
+.contact-row-item .copy-btn:focus-visible{
+  color:#121212;
+  background:rgba(18,18,18,0.08);
+}
+.contact-row-item .copy-tooltip{
+  background:#121212;
+  color:var(--bone);
+  border-color:rgba(255,255,255,0.12);
 }
 
 .copy-btn{
@@ -983,26 +1176,6 @@ section{
   transform:translateX(-50%) translateY(0);
 }
 
-@media (max-width:720px){
-  .contact-links{
-    flex-direction:column;
-    align-items:stretch;
-  }
-  .contact-link{
-    justify-content:center;
-    padding:20px 24px;
-    min-width:unset;
-  }
-  .contact-text{
-    font-size:14px;
-  }
-  .contact-number{
-    font-size:14px;
-  }
-}
-
-.contact-side .spec-row{ font-size:13px; }
-
 footer{
   padding:32px var(--frame-margin) 110px;
   display:flex;
@@ -1025,7 +1198,7 @@ footer{
   border-radius:50%;
   background:var(--card);
   border:1px solid var(--hairline);
-  color:var(--bone);
+  color:var(--accent);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -1067,8 +1240,7 @@ footer{
   html.has-custom-cursor body,
   html.has-custom-cursor a,
   html.has-custom-cursor button,
-  html.has-custom-cursor .frame,
-  html.has-custom-cursor .contact-number{
+  html.has-custom-cursor .frame{
     cursor:none;
   }
 }
@@ -1091,20 +1263,20 @@ footer{
   opacity:1;
 }
 .reticle-line{
-  stroke:var(--accent);
+  stroke:var(--bone);
   stroke-width:1.2;
   transition:transform 0.25s cubic-bezier(.22,.61,.36,1), opacity 0.2s ease;
   transform-origin:20px 20px;
 }
 .reticle-ring{
   fill:none;
-  stroke:var(--accent);
+  stroke:var(--bone);
   stroke-width:1;
   opacity:0.55;
   transition:r 0.25s cubic-bezier(.22,.61,.36,1), opacity 0.25s ease, stroke-width 0.25s ease;
 }
 .reticle-dot{
-  fill:var(--accent);
+  fill:var(--bone);
   transition:r 0.2s ease;
 }
 
@@ -1211,11 +1383,16 @@ a:focus-visible, button:focus-visible{
       <p>I am deeply interested in exploring different perspectives, emotions, cultures, and stories through filmmaking. With a strong commitment to quality, creativity, and continuous learning, I constantly refine my skills to deliver professional and impactful visual experiences.</p>
     </div>
     <div class="specs-col">
+      <div class="software-tab-label">EQUIPMENT</div>
       <div class="specs">
         <div class="spec-row"><span class="k">Camera</span><span class="v">Sony A7 IV</span></div>
         <div class="spec-row"><span class="k">Gimbal</span><span class="v">DJI RS 3</span></div>
         <div class="spec-row"><span class="k">Drone</span><span class="v">DJI Flip</span></div>
-        <div class="spec-row"><span class="k">Travels for work</span><span class="v">Yes</span></div>
+      </div>
+      <div class="availability-row">
+        <span class="availability-dot"></span>
+        <span class="k">Travels for work</span>
+        <span class="v">Yes</span>
       </div>
       <div class="software-tab">
         <div class="software-tab-label">CORE SKILLS</div>
@@ -1249,7 +1426,7 @@ a:focus-visible, button:focus-visible{
   <div class="section-head">
     <div>
       <div class="section-num">02 — SELECTED WORK</div>
-      <h2 class="section-title">The contact sheet</h2>
+      <h2 class="section-title">Work I've Created</h2>
     </div>
     <div class="section-note">A running edit of recent stills and film work, mixed the way they actually happen on set — back to back, same roll.</div>
   </div>
@@ -1330,14 +1507,46 @@ a:focus-visible, button:focus-visible{
       <span class="exp-years">3+ Years of Experience</span>
     </div>
     <div class="exp-grid">
-      <div class="exp-item"><span class="exp-num">01</span>Music Video Production</div>
-      <div class="exp-item"><span class="exp-num">02</span>Documentary Filmmaking</div>
-      <div class="exp-item"><span class="exp-num">03</span>Commercial &amp; Promotional Videos</div>
-      <div class="exp-item"><span class="exp-num">04</span>Event Coverage</div>
-      <div class="exp-item"><span class="exp-num">05</span>Photography</div>
-      <div class="exp-item"><span class="exp-num">06</span>Drone &amp; FPV Cinematography</div>
-      <div class="exp-item"><span class="exp-num">07</span>Post-Production &amp; Color Grading</div>
-      <div class="exp-item"><span class="exp-num">08</span>Motion Graphics &amp; Visual Effects</div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8Z"/></svg></span>
+        <span class="exp-num">01</span>
+        Music Video Production
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M8 14s1.5 2 4 2 4-2 4-2"/></svg></span>
+        <span class="exp-num">02</span>
+        Documentary Filmmaking
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-6 3 3 5-7"/></svg></span>
+        <span class="exp-num">03</span>
+        Commercial &amp; Promotional Videos
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg></span>
+        <span class="exp-num">04</span>
+        Event Coverage
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l2-3h8l2 3h3v12H3V7Z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+        <span class="exp-num">05</span>
+        Photography
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg></span>
+        <span class="exp-num">06</span>
+        Drone &amp; FPV Cinematography
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="13" r="2.5"/><circle cx="6" cy="14" r="2.5"/><circle cx="11" cy="19" r="2.5"/></svg></span>
+        <span class="exp-num">07</span>
+        Post-Production &amp; Color Grading
+      </div>
+      <div class="exp-item">
+        <span class="exp-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+        <span class="exp-num">08</span>
+        Motion Graphics &amp; Visual Effects
+      </div>
     </div>
   </div>
 </section>
@@ -1354,6 +1563,7 @@ a:focus-visible, button:focus-visible{
   </div>
   <div class="mediums">
     <div class="medium">
+      <span class="medium-watermark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 7h3l2-3h8l2 3h3v12H3V7Z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
       <div class="medium-icon"><span class="ring"></span> STILL</div>
       <h3>Photography</h3>
       <p>Considered, available-light photography for people and brands who want images that hold up over time — not just over a feed.</p>
@@ -1365,6 +1575,7 @@ a:focus-visible, button:focus-visible{
       </ul>
     </div>
     <div class="medium">
+      <span class="medium-watermark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8Z"/></svg></span>
       <div class="medium-icon"><span class="square"></span> MOTION</div>
       <h3>Videography</h3>
       <p>Handheld, observational films built in the edit, not just the shoot — built around what actually happened, not a shot list followed too closely.</p>
@@ -1388,23 +1599,35 @@ a:focus-visible, button:focus-visible{
   </div>
   <div class="process-list">
     <div class="process-item">
-      <div class="process-time">WEEK 1</div>
-      <div class="process-title">Call &amp; scout</div>
+      <div class="process-marker">01</div>
+      <div>
+        <div class="process-time">WEEK 1</div>
+        <div class="process-title">Call &amp; scout</div>
+      </div>
       <div class="process-desc">A real conversation about what the day or the brand actually needs — followed by a site visit or reference pull, not a template questionnaire.</div>
     </div>
     <div class="process-item">
-      <div class="process-time">SHOOT DAY</div>
-      <div class="process-title">On location</div>
+      <div class="process-marker">02</div>
+      <div>
+        <div class="process-time">SHOOT DAY</div>
+        <div class="process-title">On location</div>
+      </div>
       <div class="process-desc">Pranesh shoots stills and motion in the same pass where possible, so nothing gets restaged for the second camera.</div>
     </div>
     <div class="process-item">
-      <div class="process-time">WEEK 2–3</div>
-      <div class="process-title">First edit</div>
+      <div class="process-marker">03</div>
+      <div>
+        <div class="process-time">WEEK 2–3</div>
+        <div class="process-title">First edit</div>
+      </div>
       <div class="process-desc">A culled photo gallery arrives first, followed by a rough cut of any film work for notes before final color and sound.</div>
     </div>
     <div class="process-item">
-      <div class="process-time">WEEK 3–4</div>
-      <div class="process-title">Delivery</div>
+      <div class="process-marker">04</div>
+      <div>
+        <div class="process-time">WEEK 3–4</div>
+        <div class="process-title">Delivery</div>
+      </div>
       <div class="process-desc">Final, color-graded stills and a finished film, delivered in whatever formats the platform — print, web, or screen — actually needs.</div>
     </div>
   </div>
@@ -1412,56 +1635,44 @@ a:focus-visible, button:focus-visible{
 
 <!-- ===== MISSION ===== -->
 <section class="testimonial">
+  <div class="mission-mark">&ldquo;</div>
   <div class="mission-label">MISSION</div>
   <blockquote>To create powerful visual stories that inspire, engage, and leave a lasting impression through creativity, authenticity, and cinematic excellence.</blockquote>
 </section>
 
 <!-- ===== CONTACT ===== -->
-<section id="contact">
-  <div class="section-head">
-    <div>
-      <div class="section-num">06 — CONTACT</div>
-      <h2 class="section-title">Get in touch</h2>
-    </div>
-  </div>
-  <div class="contact-grid contact-grid--single">
-    <div>
-      <div class="contact-big">Have a date,<br>a brand, or a<br>story in mind?<br><a href="mailto:raipranesh999@gmail.com">Let's talk →</a></div>
-    </div>
-  </div>
+<section id="contact" class="contact-gold">
+  <div class="contact-gold-inner">
+    <div class="contact-eyebrow">SAY HELLO</div>
+    <h2 class="contact-headline">Ready to create a lasting memory,<br>or see the world from a new angle?</h2>
+    <p class="contact-subtext">Got a project in mind? Let's make it happen.</p>
 
-  <div class="contact-links">
-    <div class="contact-link">
-      <a href="mailto:raipranesh999@gmail.com" class="contact-link-main">
-        <span class="contact-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5C3 5.4 3.9 4.5 5 4.5h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-11Z"/><path d="m3.5 7 7.4 5.4c.65.47 1.55.47 2.2 0L20.5 7"/></svg>
-        </span>
-        <span class="contact-text">raipranesh999@gmail.com</span>
+    <div class="contact-email-wrap">
+      <a href="mailto:raipranesh999@gmail.com" class="contact-email-pill">
+        <span>RAIPRANESH999@GMAIL.COM</span>
       </a>
-      <button class="copy-btn" data-copy="raipranesh999@gmail.com" aria-label="Copy email">
+      <button class="copy-btn copy-btn--gold" data-copy="raipranesh999@gmail.com" aria-label="Copy email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
         <span class="copy-tooltip">Copy</span>
       </button>
     </div>
-    <div class="contact-link contact-link--phone">
-      <span class="contact-icon">
+
+    <div class="contact-row">
+      <span class="contact-row-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h3l1.5 5-2.3 1.6a13 13 0 0 0 6.7 6.7l1.6-2.3 5 1.5v3c0 1.1-.9 2-2 2C10.6 20.5 3.5 13.4 3.5 5c0-1.1.9-2 2-2Z"/></svg>
+        <a href="tel:+9779862453513">9862453513</a>
+        <button class="copy-btn copy-btn--gold" data-copy="9862453513" aria-label="Copy phone number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
+          <span class="copy-tooltip">Copy</span>
+        </button>
       </span>
-      <span class="contact-numbers">
-        <span class="contact-number-row">
-          <a href="tel:+9779862453513" class="contact-number">9862453513</a>
-          <button class="copy-btn" data-copy="9862453513" aria-label="Copy phone number">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
-            <span class="copy-tooltip">Copy</span>
-          </button>
-        </span>
-        <span class="contact-number-row">
-          <a href="tel:+9779805527297" class="contact-number">9805527297</a>
-          <button class="copy-btn" data-copy="9805527297" aria-label="Copy phone number">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
-            <span class="copy-tooltip">Copy</span>
-          </button>
-        </span>
+      <span class="contact-row-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h3l1.5 5-2.3 1.6a13 13 0 0 0 6.7 6.7l1.6-2.3 5 1.5v3c0 1.1-.9 2-2 2C10.6 20.5 3.5 13.4 3.5 5c0-1.1.9-2 2-2Z"/></svg>
+        <a href="tel:+9779805527297">9805527297</a>
+        <button class="copy-btn copy-btn--gold" data-copy="9805527297" aria-label="Copy phone number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
+          <span class="copy-tooltip">Copy</span>
+        </button>
       </span>
     </div>
   </div>
@@ -1521,7 +1732,7 @@ a:focus-visible, button:focus-visible{
   }
   requestAnimationFrame(tick);
 
-  const clickableSelector = 'a, button, .frame, .contact-number, .exp-item, input, textarea, select, [role="button"]';
+  const clickableSelector = 'a, button, .frame, .exp-item, input, textarea, select, [role="button"]';
   document.addEventListener('mouseover', function(e){
     if(e.target.closest(clickableSelector)){
       reticle.classList.add('locked');
@@ -1707,7 +1918,7 @@ a:focus-visible, button:focus-visible{
 // ===== SCROLL REVEAL =====
 (function(){
   const targets = document.querySelectorAll(
-    '.section-head, .about, .exp-block, .mediums, .process-item, .testimonial, .contact-grid, .contact-links, .frame'
+    '.section-head, .about, .exp-block, .mediums, .process-item, .testimonial, .contact-gold-inner, .frame'
   );
   targets.forEach(function(el){ el.classList.add('reveal'); });
 
