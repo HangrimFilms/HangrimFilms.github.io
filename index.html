@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pranesh Rai — Photographer &amp; Videographer</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#121212">
+<title>Hangrim Productions — Cinematography & Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,900&family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
 /* ============ TOKENS ============ */
@@ -17,13 +19,13 @@
   --bone:      #EDE9E2;
   --grey:      #8A857C;
   --grey-dim:  #5C5950;
-  --accent:    #C5402C;
-  --accent-dim: #7A2A1F;
+  --accent:    #D4AF37;
+  --accent-dim: #6B5621;
 
-  --display: 'Fraunces', serif;
-  --display-bold: 'Archivo Black', sans-serif;
-  --body: 'Inter', sans-serif;
-  --mono: 'Space Mono', monospace;
+  --display: 'Playfair Display', serif;
+  --display-bold: 'Bebas Neue', sans-serif;
+  --body: 'Lora', serif;
+  --mono: 'DM Mono', monospace;
 
   --frame-margin: 28px;
 }
@@ -40,7 +42,7 @@ body{
   background:var(--bg);
   color:var(--bone);
   font-family:var(--body);
-  font-weight:400;
+  font-weight:500;
   overflow-x:hidden;
   position:relative;
 }
@@ -130,6 +132,9 @@ nav{
   z-index:150;
   padding-top:48px;
 }
+@media (max-width:720px){
+  nav{ padding-top:24px; }
+}
 nav .nav-inner{
   width:100%;
   display:flex;
@@ -139,25 +144,15 @@ nav .nav-inner{
   pointer-events:auto;
 }
 .logo{
-  font-family:var(--display);
-  font-size:18px;
-  letter-spacing:0.02em;
-  font-weight:450;
+  font-family:var(--display-bold);
+  font-size:17px;
+  letter-spacing:0.12em;
+  font-weight:400;
   display:flex;
   align-items:baseline;
   gap:10px;
 }
 .logo .dot{ color:var(--accent); }
-.logo-studio{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.12em;
-  color:var(--grey-dim);
-  font-weight:400;
-}
-@media (max-width:560px){
-  .logo-studio{ display:none; }
-}
 
 .nav-links{
   display:flex;
@@ -185,6 +180,80 @@ nav .nav-inner{
   .nav-links{ display:none; }
 }
 
+/* ============ MOBILE NAV TOGGLE + OVERLAY ============ */
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:32px;
+  height:32px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  z-index:300;
+  pointer-events:auto;
+}
+.nav-toggle span{
+  display:block;
+  width:100%;
+  height:1.5px;
+  background:var(--bone);
+  transition:transform 0.35s ease, opacity 0.35s ease;
+}
+.nav-toggle.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2){ opacity:0; }
+.nav-toggle.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width:720px){
+  .nav-toggle{ display:flex; }
+}
+
+.mobile-nav{
+  position:fixed;
+  inset:0;
+  z-index:250;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 32px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-12px);
+  transition:opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
+}
+.mobile-nav.open{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+.mobile-nav-readout{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.12em;
+  color:var(--accent);
+  margin-bottom:32px;
+}
+.mobile-nav-link{
+  display:flex;
+  align-items:baseline;
+  gap:18px;
+  font-family:var(--display);
+  font-size:clamp(28px, 9vw, 44px);
+  font-weight:900;
+  color:var(--bone);
+  padding:14px 0;
+  border-bottom:1px solid var(--hairline);
+  letter-spacing:-0.01em;
+}
+.mobile-nav-link span{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--grey-dim);
+}
+.mobile-nav-link:last-child{ border-bottom:none; }
+
 /* ============ HERO ============ */
 .hero{
   min-height:100vh;
@@ -193,7 +262,34 @@ nav .nav-inner{
   justify-content:center;
   padding:0 var(--frame-margin);
   position:relative;
+  overflow:hidden;
 }
+
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  z-index:0;
+  opacity:0.55;
+}
+
+.hero-video-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    linear-gradient(to bottom,
+      rgba(18,18,18,0.55) 0%,
+      rgba(18,18,18,0.25) 40%,
+      rgba(18,18,18,0.55) 80%,
+      rgba(18,18,18,0.92) 100%
+    );
+}
+
+.hero > *:not(.hero-video):not(.hero-video-overlay){ position:relative; z-index:2; }
 
 .hero-eyebrow{
   font-family:var(--mono);
@@ -214,25 +310,14 @@ nav .nav-inner{
 
 .hero-name{
   font-family:var(--display-bold);
-  font-weight:400;
-  font-size:clamp(56px, 12.5vw, 160px);
+  font-weight:900;
+  font-size:clamp(48px, 10.5vw, 132px);
   line-height:0.94;
-  letter-spacing:-0.01em;
+  letter-spacing:-0.02em;
   max-width:1300px;
-}
-
-.studio-tag{
-  display:block;
-  font-family:var(--mono);
-  font-weight:400;
-  font-size:clamp(13px, 1.6vw, 18px);
-  letter-spacing:0.22em;
-  color:var(--accent);
-  margin-top:18px;
-}
-.studio-tag::before{
-  content:'— ';
-  color:var(--grey-dim);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
 }
 
 .hero-roles{
@@ -313,7 +398,21 @@ section{
   position:relative;
 }
 @media (max-width:720px){
-  section{ padding:90px var(--frame-margin); }
+  section{ padding:72px var(--frame-margin); }
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.8s cubic-bezier(.22,.61,.36,1), transform 0.8s cubic-bezier(.22,.61,.36,1);
+}
+.reveal.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
 }
 
 .section-head{
@@ -335,7 +434,7 @@ section{
 .section-title{
   font-family:var(--display);
   font-size:clamp(32px, 5vw, 56px);
-  font-weight:450;
+  font-weight:900;
   letter-spacing:-0.01em;
 }
 .section-note{
@@ -371,7 +470,10 @@ section{
   background:var(--bg-raised);
   overflow:hidden;
   cursor:pointer;
+  outline:1px solid transparent;
+  transition:outline-color 0.3s ease;
 }
+.frame:hover{ outline-color:var(--accent); }
 
 .frame-art{
   position:absolute;
@@ -446,13 +548,14 @@ section{
   .about{ grid-template-columns:1fr; gap:48px; }
 }
 .about-body p{
-  font-size:18px;
-  line-height:1.75;
+  font-size:17px;
+  line-height:1.8;
   color:var(--grey);
   max-width:560px;
   margin-bottom:24px;
+  font-weight:500;
 }
-.about-body p strong{ color:var(--bone); font-weight:500; }
+.about-body p strong{ color:var(--bone); font-weight:700; }
 
 .specs{
   border-top:1px solid var(--hairline);
@@ -510,9 +613,12 @@ section{
   padding:36px 40px;
   border-bottom:1px solid var(--hairline);
 }
+@media (max-width:720px){
+  .exp-head{ padding:24px; }
+}
 .exp-head h3{
   font-family:var(--display);
-  font-weight:450;
+  font-weight:900;
   font-size:clamp(24px, 3vw, 32px);
 }
 .exp-years{
@@ -538,11 +644,18 @@ section{
   display:flex;
   align-items:baseline;
   gap:18px;
+  transition:background 0.25s ease, color 0.25s ease;
+  cursor:default;
+}
+.exp-item:hover{
+  background:var(--bg-raised);
+  color:var(--accent);
 }
 .exp-item:nth-child(odd){
   border-right:1px solid var(--hairline);
 }
 @media (max-width:720px){
+  .exp-item{ padding:20px 24px; }
   .exp-item:nth-child(odd){ border-right:none; }
 }
 .exp-item:nth-last-child(1),
@@ -554,6 +667,10 @@ section{
   font-size:12px;
   color:var(--accent);
   flex-shrink:0;
+  transition:color 0.25s ease;
+}
+.exp-item:hover .exp-num{
+  color:var(--bone);
 }
 
 /* ============ SERVICES (dual medium) ============ */
@@ -571,6 +688,9 @@ section{
   background:var(--bg);
   padding:56px 44px;
   position:relative;
+}
+@media (max-width:720px){
+  .medium{ padding:36px 24px; }
 }
 .medium-icon{
   font-family:var(--mono);
@@ -594,7 +714,7 @@ section{
 .medium h3{
   font-family:var(--display);
   font-size:30px;
-  font-weight:450;
+  font-weight:900;
   margin-bottom:16px;
 }
 .medium p{
@@ -639,7 +759,7 @@ section{
 .process-title{
   font-family:var(--display);
   font-size:24px;
-  font-weight:450;
+  font-weight:900;
 }
 .process-desc{
   color:var(--grey);
@@ -663,13 +783,14 @@ section{
 }
 .testimonial blockquote{
   font-family:var(--display);
-  font-style:normal;
-  font-weight:450;
-  font-size:clamp(24px, 4vw, 38px);
-  line-height:1.4;
+  font-style:italic;
+  font-weight:900;
+  font-size:clamp(22px, 3.5vw, 36px);
+  line-height:1.45;
   max-width:760px;
   margin:0 auto;
   color:var(--bone);
+  letter-spacing:-0.01em;
 }
 
 /* ============ CONTACT ============ */
@@ -678,13 +799,17 @@ section{
   grid-template-columns:1.2fr 0.8fr;
   gap:80px;
 }
+.contact-grid--single{
+  grid-template-columns:1fr;
+  max-width:720px;
+}
 @media (max-width:900px){
   .contact-grid{ grid-template-columns:1fr; gap:56px; }
 }
 .contact-big{
   font-family:var(--display);
   font-size:clamp(36px, 6vw, 68px);
-  font-weight:450;
+  font-weight:900;
   line-height:1.05;
   letter-spacing:-0.01em;
 }
@@ -697,23 +822,93 @@ section{
 
 .contact-links{
   display:flex;
-  flex-direction:column;
-  gap:18px;
-  margin-top:40px;
+  justify-content:center;
+  align-items:stretch;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-top:64px;
 }
-.contact-links a{
-  font-size:14px;
-  color:var(--grey);
+.contact-link{
   display:flex;
   align-items:center;
-  gap:10px;
-  transition:color 0.25s ease;
+  gap:18px;
+  padding:24px 36px;
+  border:1px solid var(--hairline);
+  background:var(--card);
+  min-width:280px;
+  transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
-.contact-links a:hover{ color:var(--bone); }
-.contact-links a::after{
-  content:'↗';
-  font-size:12px;
+.contact-link:hover{
+  border-color:var(--accent);
+  background:var(--bg-raised);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(212,175,55,0.1);
+}
+.contact-icon{
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:var(--accent-dim);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:var(--accent);
+  transition:background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-icon svg{
+  width:20px;
+  height:20px;
+}
+.contact-link:hover .contact-icon{
+  background:var(--accent);
+  color:#121212;
+  box-shadow:0 0 20px rgba(212,175,55,0.4);
+}
+.contact-text{
+  font-family:var(--mono);
+  font-size:15px;
+  letter-spacing:0.01em;
+  color:var(--bone);
+  font-weight:500;
+}
+
+.contact-link--phone{
+  cursor:default;
+}
+.contact-numbers{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.contact-number{
+  font-family:var(--mono);
+  font-size:15px;
+  letter-spacing:0.01em;
+  color:var(--bone);
+  font-weight:500;
+  transition:color 0.2s ease;
+}
+.contact-number:hover{
+  color:var(--accent);
+}
+
+@media (max-width:720px){
+  .contact-links{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .contact-link{
+    justify-content:center;
+    padding:20px 24px;
+    min-width:unset;
+  }
+  .contact-text{
+    font-size:14px;
+  }
+  .contact-number{
+    font-size:14px;
+  }
 }
 
 .contact-side .spec-row{ font-size:13px; }
@@ -754,7 +949,7 @@ a:focus-visible, button:focus-visible{
 
 <nav>
   <div class="nav-inner">
-    <div class="logo">PRANESH RAI<span class="dot">.</span> <span class="logo-studio">HANGRIM FILMS</span></div>
+    <div class="logo">HANGRIM PRODUCTIONS<span class="dot">.</span></div>
     <div class="nav-links">
       <a href="#work">Work</a>
       <a href="#about">About</a>
@@ -763,13 +958,31 @@ a:focus-visible, button:focus-visible{
       <a href="#process">Process</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-readout">MENU</div>
+  <a href="#work" class="mobile-nav-link"><span>01</span>Work</a>
+  <a href="#about" class="mobile-nav-link"><span>02</span>About</a>
+  <a href="#experience" class="mobile-nav-link"><span>03</span>Experience</a>
+  <a href="#services" class="mobile-nav-link"><span>04</span>Services</a>
+  <a href="#process" class="mobile-nav-link"><span>05</span>Process</a>
+  <a href="#contact" class="mobile-nav-link"><span>06</span>Contact</a>
+</div>
+
 <!-- ===== HERO ===== -->
 <section class="hero" id="top">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg">
+    <source src="hero-bg.webm" type="video/webm">
+    <source src="hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay"></div>
   <div class="hero-eyebrow">BASED IN KATHMANDU — WORKING ALL OVER NEPAL</div>
-  <h1 class="hero-name">PRANESH<br>RAI<span class="studio-tag">HANGRIM FILMS</span></h1>
+  <h1 class="hero-name">HANGRIM<br>PRODUCTIONS</h1>
   <div class="hero-roles">
     <span>Cinematographer</span>
     <span>Video Editor</span>
@@ -1014,31 +1227,76 @@ a:focus-visible, button:focus-visible{
       <h2 class="section-title">Get in touch</h2>
     </div>
   </div>
-  <div class="contact-grid">
+  <div class="contact-grid contact-grid--single">
     <div>
-      <div class="contact-big">Have a date,<br>a brand, or a<br>story in mind?<br><a href="mailto:hello@praneshrai.com">Let's talk →</a></div>
-      <div class="contact-links">
-        <a href="mailto:hello@praneshrai.com">hello@praneshrai.com</a>
-        <a href="#">Instagram</a>
-        <a href="#">Vimeo — film reel</a>
-      </div>
+      <div class="contact-big">Have a date,<br>a brand, or a<br>story in mind?<br><a href="mailto:raipranesh999@gmail.com">Let's talk →</a></div>
     </div>
-    <div class="contact-side">
-      <div class="specs">
-        <div class="spec-row"><span class="k">Response time</span><span class="v">Within 48 hours</span></div>
-        <div class="spec-row"><span class="k">2026 calendar</span><span class="v">Booking now</span></div>
-        <div class="spec-row"><span class="k">Travel</span><span class="v">All over Nepal</span></div>
-      </div>
+  </div>
+
+  <div class="contact-links">
+    <a href="mailto:raipranesh999@gmail.com" class="contact-link">
+      <span class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5C3 5.4 3.9 4.5 5 4.5h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-11Z"/><path d="m3.5 7 7.4 5.4c.65.47 1.55.47 2.2 0L20.5 7"/></svg>
+      </span>
+      <span class="contact-text">raipranesh999@gmail.com</span>
+    </a>
+    <div class="contact-link contact-link--phone">
+      <span class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h3l1.5 5-2.3 1.6a13 13 0 0 0 6.7 6.7l1.6-2.3 5 1.5v3c0 1.1-.9 2-2 2C10.6 20.5 3.5 13.4 3.5 5c0-1.1.9-2 2-2Z"/></svg>
+      </span>
+      <span class="contact-numbers">
+        <a href="tel:+9779862453513" class="contact-number">9862453513</a>
+        <a href="tel:+9779805527297" class="contact-number">9805527297</a>
+      </span>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>© 2026 PRANESH RAI — HANGRIM FILMS</div>
+  <div>© 2026 HANGRIM PRODUCTIONS</div>
   <div>CINEMA — DOCUMENTARY — STILLS — AERIAL</div>
 </footer>
 
 <script>
+// ===== HERO VIDEO: always autoplay on all devices; fallback retry if browser autoplay policy delays it =====
+(function(){
+  const video = document.querySelector('.hero-video');
+  if(!video) return;
+  const tryPlay = function(){ video.play().catch(function(){}); };
+  tryPlay();
+  document.addEventListener('click', tryPlay, { once:true });
+  document.addEventListener('touchstart', tryPlay, { once:true });
+})();
+
+// ===== MOBILE NAV: hamburger toggle, overlay open/close, close on link tap =====
+(function(){
+  const toggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  if(!toggle || !mobileNav) return;
+
+  function closeNav(){
+    toggle.classList.remove('open');
+    mobileNav.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  function openNav(){
+    toggle.classList.add('open');
+    mobileNav.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  toggle.addEventListener('click', function(){
+    if(mobileNav.classList.contains('open')) closeNav();
+    else openNav();
+  });
+
+  mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link){
+    link.addEventListener('click', closeNav);
+  });
+})();
+
 // ===== HUD: tally light + fstop + mode react to whether a video or photo frame is centered =====
 (function(){
   const hud = document.getElementById('hud');
@@ -1097,6 +1355,25 @@ a:focus-visible, button:focus-visible{
     });
   }, { threshold: 0 });
   workObserver.observe(work);
+})();
+
+// ===== SCROLL REVEAL =====
+(function(){
+  const targets = document.querySelectorAll(
+    '.section-head, .about, .exp-block, .mediums, .process-item, .testimonial, .contact-grid, .contact-links, .frame'
+  );
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+
+  const ro = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+        ro.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  targets.forEach(function(el){ ro.observe(el); });
 })();
 </script>
 
