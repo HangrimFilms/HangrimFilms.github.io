@@ -34,9 +34,18 @@
   :root{ --frame-margin: 16px; }
 }
 
-*{ margin:0; padding:0; box-sizing:border-box; }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-html{ scroll-behavior:smooth; }
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
 
 body{
   background:var(--bg);
@@ -44,6 +53,7 @@ body{
   font-family:var(--body);
   font-weight:400;
   overflow-x:hidden;
+  max-width:100vw;
   position:relative;
 }
 
@@ -185,18 +195,20 @@ nav .nav-inner{
   display:none;
   flex-direction:column;
   justify-content:center;
+  align-items:center;
   gap:5px;
-  width:32px;
-  height:32px;
+  width:44px;
+  height:44px;
   background:none;
   border:none;
   cursor:pointer;
   z-index:300;
   pointer-events:auto;
+  -webkit-tap-highlight-color:transparent;
 }
 .nav-toggle span{
   display:block;
-  width:100%;
+  width:22px;
   height:1.5px;
   background:var(--bone);
   transition:transform 0.35s ease, opacity 0.35s ease;
@@ -257,6 +269,7 @@ nav .nav-inner{
 /* ============ HERO ============ */
 .hero{
   min-height:100vh;
+  min-height:100dvh;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -318,6 +331,9 @@ nav .nav-inner{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
+}
+.hero-name-accent{
+  color:var(--accent);
 }
 
 .hero-roles{
@@ -838,11 +854,12 @@ section{
 .contact-link{
   display:flex;
   align-items:center;
-  gap:18px;
-  padding:24px 36px;
+  gap:8px;
+  padding:24px 28px 24px 36px;
   border:1px solid var(--hairline);
   background:var(--card);
   min-width:280px;
+  position:relative;
   transition:border-color 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 .contact-link:hover{
@@ -850,6 +867,13 @@ section{
   background:var(--bg-raised);
   transform:translateY(-4px);
   box-shadow:0 12px 40px rgba(212,175,55,0.1);
+}
+.contact-link-main{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex:1;
+  min-width:0;
 }
 .contact-icon{
   width:46px;
@@ -878,6 +902,7 @@ section{
   letter-spacing:0.01em;
   color:var(--bone);
   font-weight:500;
+  flex:1;
 }
 
 .contact-link--phone{
@@ -886,7 +911,13 @@ section{
 .contact-numbers{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  flex:1;
+  margin-left:10px;
+}
+.contact-number-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 .contact-number{
   font-family:var(--mono);
@@ -895,9 +926,61 @@ section{
   color:var(--bone);
   font-weight:500;
   transition:color 0.2s ease;
+  padding:6px 0;
+  display:inline-block;
 }
 .contact-number:hover{
   color:var(--accent);
+}
+
+.copy-btn{
+  position:relative;
+  width:32px;
+  height:32px;
+  flex-shrink:0;
+  border:none;
+  background:transparent;
+  color:var(--grey-dim);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border-radius:6px;
+  transition:color 0.2s ease, background 0.2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.copy-btn:hover,
+.copy-btn:focus-visible{
+  color:var(--accent);
+  background:rgba(212,175,55,0.08);
+}
+.copy-btn svg{
+  width:15px;
+  height:15px;
+}
+.copy-btn.copied{
+  color:var(--accent);
+}
+.copy-tooltip{
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  color:var(--bone);
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.04em;
+  padding:5px 10px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s ease, transform 0.2s ease;
+}
+.copy-btn.copied .copy-tooltip{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 
 @media (max-width:720px){
@@ -930,6 +1013,113 @@ footer{
   letter-spacing:0.04em;
   flex-wrap:wrap;
   gap:12px;
+}
+
+/* ============ BACK TO TOP ============ */
+.back-to-top{
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--card);
+  border:1px solid var(--hairline);
+  color:var(--bone);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:180;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(8px);
+  transition:opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.back-to-top.visible{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+.back-to-top:hover{
+  border-color:var(--accent);
+  background:var(--bg-raised);
+  color:var(--accent);
+}
+.back-to-top svg{
+  width:18px;
+  height:18px;
+}
+@media (max-width:720px){
+  .back-to-top{
+    bottom:20px;
+    right:16px;
+    width:44px;
+    height:44px;
+  }
+}
+
+/* ============ CUSTOM CURSOR (viewfinder reticle) ============ */
+/* Only on devices with a real mouse — never touch */
+@media (hover:hover) and (pointer:fine){
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor .frame,
+  html.has-custom-cursor .contact-number{
+    cursor:none;
+  }
+}
+
+.cursor-reticle{
+  position:fixed;
+  top:0;
+  left:0;
+  width:40px;
+  height:40px;
+  margin-left:-20px;
+  margin-top:-20px;
+  pointer-events:none;
+  z-index:400;
+  opacity:0;
+  transition:opacity 0.25s ease;
+  will-change:transform;
+}
+.cursor-reticle.active{
+  opacity:1;
+}
+.reticle-line{
+  stroke:var(--accent);
+  stroke-width:1.2;
+  transition:transform 0.25s cubic-bezier(.22,.61,.36,1), opacity 0.2s ease;
+  transform-origin:20px 20px;
+}
+.reticle-ring{
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:1;
+  opacity:0.55;
+  transition:r 0.25s cubic-bezier(.22,.61,.36,1), opacity 0.25s ease, stroke-width 0.25s ease;
+}
+.reticle-dot{
+  fill:var(--accent);
+  transition:r 0.2s ease;
+}
+
+/* focus-lock state: hovering anything clickable pulls the ticks inward like autofocus acquiring a subject */
+.cursor-reticle.locked .reticle-ring{
+  r:7;
+  opacity:1;
+  stroke-width:1.4;
+}
+.cursor-reticle.locked .reticle-line[x1="20"][y1="2"]{ transform:translateY(6px); }
+.cursor-reticle.locked .reticle-line[x1="20"][y1="30"]{ transform:translateY(-6px); }
+.cursor-reticle.locked .reticle-line[x1="2"][y1="20"]{ transform:translateX(6px); }
+.cursor-reticle.locked .reticle-line[x1="30"][y1="20"]{ transform:translateX(-6px); }
+.cursor-reticle.locked .reticle-dot{
+  r:2;
 }
 
 /* focus visibility */
@@ -989,7 +1179,7 @@ a:focus-visible, button:focus-visible{
   </video>
   <div class="hero-video-overlay"></div>
   <div class="hero-eyebrow">BASED IN KATHMANDU — WORKING ALL OVER NEPAL</div>
-  <h1 class="hero-name">HANGRIM<br>PRODUCTIONS</h1>
+  <h1 class="hero-name">HANGRIM<br><span class="hero-name-accent">PRODUCTIONS</span></h1>
   <div class="hero-roles">
     <span>Cinematographer</span>
     <span>Video Editor</span>
@@ -1241,19 +1431,37 @@ a:focus-visible, button:focus-visible{
   </div>
 
   <div class="contact-links">
-    <a href="mailto:raipranesh999@gmail.com" class="contact-link">
-      <span class="contact-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5C3 5.4 3.9 4.5 5 4.5h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-11Z"/><path d="m3.5 7 7.4 5.4c.65.47 1.55.47 2.2 0L20.5 7"/></svg>
-      </span>
-      <span class="contact-text">raipranesh999@gmail.com</span>
-    </a>
+    <div class="contact-link">
+      <a href="mailto:raipranesh999@gmail.com" class="contact-link-main">
+        <span class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5C3 5.4 3.9 4.5 5 4.5h14c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-11Z"/><path d="m3.5 7 7.4 5.4c.65.47 1.55.47 2.2 0L20.5 7"/></svg>
+        </span>
+        <span class="contact-text">raipranesh999@gmail.com</span>
+      </a>
+      <button class="copy-btn" data-copy="raipranesh999@gmail.com" aria-label="Copy email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
+        <span class="copy-tooltip">Copy</span>
+      </button>
+    </div>
     <div class="contact-link contact-link--phone">
       <span class="contact-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h3l1.5 5-2.3 1.6a13 13 0 0 0 6.7 6.7l1.6-2.3 5 1.5v3c0 1.1-.9 2-2 2C10.6 20.5 3.5 13.4 3.5 5c0-1.1.9-2 2-2Z"/></svg>
       </span>
       <span class="contact-numbers">
-        <a href="tel:+9779862453513" class="contact-number">9862453513</a>
-        <a href="tel:+9779805527297" class="contact-number">9805527297</a>
+        <span class="contact-number-row">
+          <a href="tel:+9779862453513" class="contact-number">9862453513</a>
+          <button class="copy-btn" data-copy="9862453513" aria-label="Copy phone number">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
+            <span class="copy-tooltip">Copy</span>
+          </button>
+        </span>
+        <span class="contact-number-row">
+          <a href="tel:+9779805527297" class="contact-number">9805527297</a>
+          <button class="copy-btn" data-copy="9805527297" aria-label="Copy phone number">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M4 16V5.5C4 4.7 4.7 4 5.5 4H16"/></svg>
+            <span class="copy-tooltip">Copy</span>
+          </button>
+        </span>
       </span>
     </div>
   </div>
@@ -1264,7 +1472,139 @@ a:focus-visible, button:focus-visible{
   <div>CINEMA — DOCUMENTARY — STILLS — AERIAL</div>
 </footer>
 
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="cursor-reticle" id="cursorReticle" aria-hidden="true">
+  <svg viewBox="0 0 40 40" width="40" height="40">
+    <line class="reticle-line" x1="20" y1="2" x2="20" y2="10"/>
+    <line class="reticle-line" x1="20" y1="30" x2="20" y2="38"/>
+    <line class="reticle-line" x1="2" y1="20" x2="10" y2="20"/>
+    <line class="reticle-line" x1="30" y1="20" x2="38" y2="20"/>
+    <circle class="reticle-ring" cx="20" cy="20" r="11"/>
+    <circle class="reticle-dot" cx="20" cy="20" r="1.4"/>
+  </svg>
+</div>
+
 <script>
+// ===== CUSTOM CURSOR: viewfinder reticle, fine-pointer devices only =====
+(function(){
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if(!isFinePointer) return;
+
+  const reticle = document.getElementById('cursorReticle');
+  if(!reticle) return;
+
+  document.documentElement.classList.add('has-custom-cursor');
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let currentX = mouseX;
+  let currentY = mouseY;
+
+  document.addEventListener('mousemove', function(e){
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if(!reticle.classList.contains('active')) reticle.classList.add('active');
+  });
+
+  document.addEventListener('mouseleave', function(){
+    reticle.classList.remove('active');
+  });
+
+  function tick(){
+    currentX += (mouseX - currentX) * 0.35;
+    currentY += (mouseY - currentY) * 0.35;
+    reticle.style.transform = 'translate(' + currentX + 'px,' + currentY + 'px)';
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  const clickableSelector = 'a, button, .frame, .contact-number, .exp-item, input, textarea, select, [role="button"]';
+  document.addEventListener('mouseover', function(e){
+    if(e.target.closest(clickableSelector)){
+      reticle.classList.add('locked');
+    }
+  });
+  document.addEventListener('mouseout', function(e){
+    if(e.target.closest(clickableSelector) && !e.relatedTarget?.closest(clickableSelector)){
+      reticle.classList.remove('locked');
+    }
+  });
+})();
+
+// ===== COPY TO CLIPBOARD: email and phone number quick-copy buttons =====
+(function(){
+  const buttons = document.querySelectorAll('.copy-btn');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      const value = btn.getAttribute('data-copy');
+      if(!value) return;
+
+      const finish = function(){
+        const tooltip = btn.querySelector('.copy-tooltip');
+        if(tooltip) tooltip.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function(){
+          btn.classList.remove('copied');
+          if(tooltip) setTimeout(function(){ tooltip.textContent = 'Copy'; }, 250);
+        }, 1400);
+      };
+
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(value).then(finish).catch(function(){
+          fallbackCopy(value);
+          finish();
+        });
+      } else {
+        fallbackCopy(value);
+        finish();
+      }
+    });
+  });
+
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); }catch(err){}
+    document.body.removeChild(ta);
+  }
+})();
+
+// ===== BACK TO TOP: show after scrolling past hero, scroll to top on click =====
+(function(){
+  const btn = document.getElementById('backToTop');
+  if(!btn) return;
+
+  let ticking = false;
+  function checkScroll(){
+    if(window.scrollY > window.innerHeight * 0.6){
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(checkScroll);
+      ticking = true;
+    }
+  }, { passive:true });
+  checkScroll();
+
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+})();
+
 // ===== HERO VIDEO: always autoplay on all devices; fallback retry if browser autoplay policy delays it =====
 (function(){
   const video = document.querySelector('.hero-video');
