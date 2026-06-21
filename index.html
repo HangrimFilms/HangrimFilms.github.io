@@ -142,9 +142,21 @@ nav{
   top:0; left:0; right:0;
   z-index:150;
   padding-top:48px;
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:background 0.4s ease, border-color 0.4s ease, padding 0.4s ease;
+}
+nav.nav-scrolled{
+  background:rgba(38,38,40,0.82);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding-top:18px;
+  padding-bottom:18px;
 }
 @media (max-width:720px){
   nav{ padding-top:24px; }
+  nav.nav-scrolled{ padding-top:14px; padding-bottom:14px; }
 }
 nav .nav-inner{
   width:100%;
@@ -1903,6 +1915,29 @@ a:focus-visible, button:focus-visible{
     try{ document.execCommand('copy'); }catch(err){}
     document.body.removeChild(ta);
   }
+})();
+
+// ===== NAV BACKGROUND: solid grey backing once scrolled past the hero =====
+(function(){
+  const navEl = document.querySelector('nav');
+  if(!navEl) return;
+
+  let ticking = false;
+  function checkNavScroll(){
+    if(window.scrollY > window.innerHeight * 0.7){
+      navEl.classList.add('nav-scrolled');
+    } else {
+      navEl.classList.remove('nav-scrolled');
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      requestAnimationFrame(checkNavScroll);
+      ticking = true;
+    }
+  }, { passive:true });
+  checkNavScroll();
 })();
 
 // ===== BACK TO TOP: show after scrolling past hero, scroll to top on click =====
