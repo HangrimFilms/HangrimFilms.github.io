@@ -206,6 +206,11 @@ nav .nav-inner{
   z-index:300;
   pointer-events:auto;
   -webkit-tap-highlight-color:transparent;
+  transition:opacity 0.2s ease;
+}
+.nav-toggle.open{
+  opacity:0;
+  pointer-events:none;
 }
 .nav-toggle span{
   display:block;
@@ -230,7 +235,7 @@ nav .nav-inner{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:0 32px;
+  padding:0 28px;
   opacity:0;
   visibility:hidden;
   transform:translateY(-12px);
@@ -241,28 +246,58 @@ nav .nav-inner{
   visibility:visible;
   transform:translateY(0);
 }
+.mobile-nav-close{
+  position:absolute;
+  top:22px;
+  right:20px;
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:none;
+  border:1px solid var(--hairline);
+  border-radius:50%;
+  color:var(--bone);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.mobile-nav-close:hover,
+.mobile-nav-close:focus-visible{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--card);
+}
+.mobile-nav-close:active{
+  transform:scale(0.92);
+}
+.mobile-nav-close svg{
+  width:18px;
+  height:18px;
+}
 .mobile-nav-readout{
   font-family:var(--mono);
   font-size:12px;
   letter-spacing:0.12em;
   color:var(--accent);
-  margin-bottom:32px;
+  margin-bottom:28px;
 }
 .mobile-nav-link{
   display:flex;
   align-items:baseline;
-  gap:18px;
+  gap:16px;
   font-family:var(--display);
-  font-size:clamp(28px, 9vw, 44px);
+  font-size:clamp(24px, 7.5vw, 34px);
   font-weight:900;
   color:var(--bone);
-  padding:14px 0;
+  padding:12px 0;
   border-bottom:1px solid var(--hairline);
   letter-spacing:-0.01em;
 }
 .mobile-nav-link span{
   font-family:var(--mono);
-  font-size:13px;
+  font-size:12px;
   color:var(--grey-dim);
 }
 .mobile-nav-link:last-child{ border-bottom:none; }
@@ -1015,13 +1050,6 @@ section{
   max-width:780px;
   margin:0 auto;
 }
-.contact-eyebrow{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:0.2em;
-  color:rgba(18,18,18,0.65);
-  margin-bottom:28px;
-}
 .contact-headline{
   font-family:var(--display-bold);
   font-weight:900;
@@ -1029,15 +1057,6 @@ section{
   line-height:1.08;
   color:#121212;
   letter-spacing:0;
-}
-.contact-subtext{
-  margin-top:24px;
-  font-family:var(--body);
-  font-size:16px;
-  color:rgba(18,18,18,0.7);
-  max-width:420px;
-  margin-left:auto;
-  margin-right:auto;
 }
 .contact-email-wrap{
   margin-top:48px;
@@ -1305,6 +1324,101 @@ footer{
   r:2;
 }
 
+/* ============ MOBILE TYPOGRAPHY & POLISH ============ */
+@media (max-width:720px){
+  .about-body p{
+    font-size:15px;
+    line-height:1.65;
+    margin-bottom:18px;
+  }
+  .medium h3{
+    font-size:24px;
+    margin-bottom:12px;
+  }
+  .medium p{
+    font-size:13.5px;
+    line-height:1.6;
+    margin-bottom:20px;
+  }
+  .medium ul li{
+    font-size:11.5px;
+    padding:9px 0;
+  }
+  .medium-icon{
+    font-size:11px;
+    margin-bottom:18px;
+  }
+  .process-title{
+    font-size:19px;
+    margin-top:4px;
+  }
+  .process-desc{
+    font-size:12.5px;
+    line-height:1.6;
+  }
+  .process-item{
+    padding:24px 0;
+    gap:20px;
+  }
+  .process-time{
+    font-size:10px;
+  }
+  .exp-item{
+    font-size:12.5px;
+    padding:24px 18px 20px;
+    gap:14px;
+  }
+  .exp-item-icon{
+    width:32px;
+    height:32px;
+  }
+  .exp-item-icon svg{
+    width:14px;
+    height:14px;
+  }
+  .exp-num{
+    font-size:22px;
+  }
+  .section-note{
+    font-size:10px;
+    line-height:1.5;
+  }
+  .mission-label{
+    font-size:10px;
+  }
+  .mission-mark{
+    font-size:32px;
+    margin-bottom:10px;
+  }
+  .testimonial blockquote{
+    font-size:13.5px;
+    line-height:1.75;
+  }
+  .testimonial{
+    padding:56px var(--frame-margin);
+  }
+  .software-tags span{
+    font-size:10.5px;
+    padding:7px 11px;
+  }
+  .spec-row{
+    font-size:12.5px;
+    padding:14px 0;
+  }
+  .availability-row{
+    padding:11px 14px;
+  }
+  .hero-roles span{
+    font-size:11px;
+  }
+  .hero-meta-item{
+    font-size:10px;
+  }
+  .hero-meta-item strong{
+    font-size:12.5px;
+  }
+}
+
 /* focus visibility */
 a:focus-visible, button:focus-visible{
   outline:1.5px solid var(--accent);
@@ -1345,6 +1459,9 @@ a:focus-visible, button:focus-visible{
 </nav>
 
 <div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
   <div class="mobile-nav-readout">MENU</div>
   <a href="#about" class="mobile-nav-link"><span>01</span>About</a>
   <a href="#work" class="mobile-nav-link"><span>02</span>Work</a>
@@ -1644,9 +1761,7 @@ a:focus-visible, button:focus-visible{
 <!-- ===== CONTACT ===== -->
 <section id="contact" class="contact-gold">
   <div class="contact-gold-inner">
-    <div class="contact-eyebrow">SAY HELLO</div>
     <h2 class="contact-headline">Ready to create a lasting memory,<br>or see the world from a new angle?</h2>
-    <p class="contact-subtext">Got a project in mind? Let's make it happen.</p>
 
     <div class="contact-email-wrap">
       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raipranesh999@gmail.com" target="_blank" rel="noopener noreferrer" class="contact-email-pill">
@@ -1827,10 +1942,11 @@ a:focus-visible, button:focus-visible{
   document.addEventListener('touchstart', tryPlay, { once:true });
 })();
 
-// ===== MOBILE NAV: hamburger toggle, overlay open/close, close on link tap =====
+// ===== MOBILE NAV: hamburger toggle, overlay open/close, close on link tap or X button =====
 (function(){
   const toggle = document.getElementById('navToggle');
   const mobileNav = document.getElementById('mobileNav');
+  const closeBtn = document.getElementById('mobileNavClose');
   if(!toggle || !mobileNav) return;
 
   function closeNav(){
@@ -1850,6 +1966,10 @@ a:focus-visible, button:focus-visible{
     if(mobileNav.classList.contains('open')) closeNav();
     else openNav();
   });
+
+  if(closeBtn){
+    closeBtn.addEventListener('click', closeNav);
+  }
 
   mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link){
     link.addEventListener('click', closeNav);
