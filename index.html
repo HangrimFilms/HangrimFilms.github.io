@@ -435,17 +435,20 @@ nav .nav-inner{
 
 .scroll-cue{
   position:absolute;
-  bottom:90px;
-  left:var(--frame-margin);
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
   font-family:var(--mono);
   font-size:11px;
   color:var(--grey-dim);
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:10px;
+  gap:8px;
+  letter-spacing:0.08em;
 }
 .scroll-cue .line{
-  width:1px; height:32px;
+  width:1px; height:28px;
   background:linear-gradient(to bottom, var(--grey-dim), transparent);
   animation:scrollline 2s ease-in-out infinite;
 }
@@ -523,7 +526,7 @@ section{
 /* ============ CONTACT SHEET (work grid) ============ */
 .contact-sheet{
   display:grid;
-  grid-template-columns:repeat(4, 1fr);
+  grid-template-columns:repeat(3, 1fr);
   gap:2px;
   background:var(--hairline);
   border:1px solid var(--hairline);
@@ -533,6 +536,145 @@ section{
 }
 @media (max-width:560px){
   .contact-sheet{ grid-template-columns:1fr; }
+}
+
+/* ============ WORK TABS (accordion dropdown) ============ */
+.work-tabs{
+  display:flex;
+  gap:2px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+  position:relative;
+  z-index:10;
+}
+.work-tab{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:18px 16px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.05em;
+  color:var(--grey);
+  background:var(--bg);
+  border:none;
+  cursor:pointer;
+  transition:background 0.25s ease, color 0.25s ease;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+  flex-direction:column;
+  gap:6px;
+}
+.work-tab-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.work-tab svg{
+  width:16px;
+  height:16px;
+  flex-shrink:0;
+}
+.work-tab-chevron{
+  width:12px;
+  height:12px;
+  flex-shrink:0;
+  transition:transform 0.3s ease;
+  opacity:0.5;
+}
+.work-tab:hover{
+  background:var(--bg-raised);
+  color:var(--bone);
+}
+.work-tab.active{
+  background:var(--card);
+  color:var(--accent);
+}
+.work-tab.active .work-tab-chevron{
+  transform:rotate(180deg);
+  opacity:1;
+}
+@media (max-width:560px){
+  .work-tabs{ flex-direction:column; }
+  .work-tab{ flex-direction:row; justify-content:space-between; padding:16px; }
+  .work-tab-top{ flex:1; }
+}
+
+/* The dropdown panel that extends below each tab */
+.work-panel{
+  display:none;
+  border:1px solid var(--hairline);
+  border-top:2px solid var(--accent);
+  background:var(--bg-raised);
+  animation:panelSlideDown 0.3s cubic-bezier(.22,.61,.36,1);
+}
+.work-panel.active{
+  display:block;
+}
+@keyframes panelSlideDown{
+  from{ opacity:0; transform:translateY(-8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* Tab indicator bar below active tab */
+.work-tab.active::after{
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:2px;
+  background:var(--accent);
+  box-shadow:0 0 10px rgba(212,175,55,0.4);
+}
+
+/* ============ VIDEO GRID ============ */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:2px;
+  background:var(--hairline);
+  border:1px solid var(--hairline);
+}
+@media (max-width:720px){
+  .video-grid{ grid-template-columns:1fr; }
+}
+.video-card{
+  background:var(--bg-raised);
+  display:flex;
+  flex-direction:column;
+}
+.video-embed{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:var(--card);
+  overflow:hidden;
+}
+.video-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+.video-card-info{
+  padding:16px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  border-top:1px solid var(--hairline);
+}
+.video-card-tag{
+  font-size:13px;
+  font-weight:600;
+  color:var(--bone);
+}
+.video-card-meta{
+  font-family:var(--mono);
+  font-size:10.5px;
+  color:var(--grey-dim);
+  letter-spacing:0.02em;
 }
 
 .frame{
@@ -1431,6 +1573,238 @@ footer{
   }
 }
 
+/* ============ WORK PANEL LINK MENU ============ */
+.work-panel-links{
+  border-bottom:1px solid var(--hairline);
+}
+.work-panel-link{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:16px 24px;
+  border-bottom:1px solid var(--hairline);
+  color:var(--grey);
+  font-size:13px;
+  transition:background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+  cursor:pointer;
+}
+.work-panel-link:last-child{ border-bottom:none; }
+.work-panel-link:hover{
+  background:var(--card);
+  color:var(--bone);
+  padding-left:30px;
+}
+.work-panel-link:hover .work-panel-link-arrow{
+  color:var(--accent);
+  transform:translate(2px,-2px);
+}
+.work-panel-link-num{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--accent);
+  letter-spacing:0.08em;
+  min-width:28px;
+  flex-shrink:0;
+}
+.work-panel-link-title{
+  font-size:14px;
+  font-weight:600;
+  color:var(--bone);
+  flex:1;
+}
+.work-panel-link-meta{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--grey-dim);
+  letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.work-panel-link-arrow{
+  width:14px;
+  height:14px;
+  flex-shrink:0;
+  color:var(--grey-dim);
+  transition:transform 0.2s ease, color 0.2s ease;
+}
+@media (max-width:560px){
+  .work-panel-link{ padding:13px 16px; gap:12px; }
+  .work-panel-link:hover{ padding-left:20px; }
+  .work-panel-link-meta{ display:none; }
+}
+
+/* ============ MUSIC VIDEO THUMBNAILS ============ */
+.mv-thumb{
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+}
+.mv-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.5s cubic-bezier(.22,.61,.36,1), filter 0.3s ease;
+  filter:brightness(0.85);
+}
+.mv-thumb-card:hover .mv-thumb img{
+  transform:scale(1.04);
+  filter:brightness(0.65);
+}
+.mv-thumb-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.1);
+  transition:background 0.3s ease;
+}
+.mv-thumb-card:hover .mv-thumb-overlay{
+  background:rgba(0,0,0,0.35);
+}
+.mv-play-circle{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.3s cubic-bezier(.22,.61,.36,1), box-shadow 0.3s ease;
+  box-shadow:0 4px 24px rgba(212,175,55,0.35);
+}
+.mv-thumb-card:hover .mv-play-circle{
+  transform:scale(1.12);
+  box-shadow:0 6px 32px rgba(212,175,55,0.55);
+}
+.mv-play-circle svg{ margin-left:3px; }
+
+/* play button style in link list */
+.mv-play-btn{
+  width:100%;
+  text-align:left;
+  background:none;
+  font-family:inherit;
+  border:none;
+  cursor:pointer;
+}
+.mv-play-icon{ color:var(--accent); }
+.work-panel-link.mv-play-btn:hover .mv-play-icon{
+  color:var(--accent);
+  transform:scale(1.15);
+}
+
+/* ============ VIDEO LIGHTBOX MODAL ============ */
+.yt-modal{
+  position:fixed;
+  inset:0;
+  z-index:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity 0.3s ease, visibility 0.3s ease;
+}
+.yt-modal.open{
+  opacity:1;
+  visibility:visible;
+}
+.yt-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(8,8,8,0.88);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  cursor:pointer;
+}
+.yt-modal-box{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:900px;
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  box-shadow:0 24px 80px rgba(0,0,0,0.7);
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.35s cubic-bezier(.22,.61,.36,1);
+}
+.yt-modal.open .yt-modal-box{
+  transform:translateY(0) scale(1);
+}
+.yt-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 18px;
+  border-bottom:1px solid var(--hairline);
+}
+.yt-modal-title{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:var(--grey);
+}
+.yt-modal-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.yt-modal-yt-link{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.05em;
+  color:var(--grey);
+  padding:6px 10px;
+  border:1px solid var(--hairline);
+  transition:color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  white-space:nowrap;
+}
+.yt-modal-yt-link:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:var(--card);
+}
+.yt-modal-close{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  background:none;
+  border:1px solid var(--hairline);
+  color:var(--grey);
+  cursor:pointer;
+  transition:color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  flex-shrink:0;
+}
+.yt-modal-close:hover{
+  color:var(--bone);
+  border-color:var(--bone);
+  background:var(--card);
+}
+.yt-modal-embed{
+  position:relative;
+  aspect-ratio:16/9;
+  background:#000;
+}
+.yt-modal-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+@media (max-width:560px){
+  .yt-modal{ padding:0; align-items:flex-end; }
+  .yt-modal-box{ max-width:100%; border-bottom:none; border-left:none; border-right:none; }
+}
+
 /* focus visibility */
 a:focus-visible, button:focus-visible{
   outline:1.5px solid var(--accent);
@@ -1505,7 +1879,7 @@ a:focus-visible, button:focus-visible{
     <div class="hero-meta-item">BASED IN<strong>Kathmandu, NP</strong></div>
     <div class="hero-meta-item">AVAILABLE FOR<strong>2026 bookings</strong></div>
   </div>
-  <div class="scroll-cue"><div class="line"></div>SCROLL</div>
+  <div class="scroll-cue">SCROLL<div class="line"></div></div>
 </section>
 
 <!-- ===== ABOUT ===== -->
@@ -1568,65 +1942,233 @@ a:focus-visible, button:focus-visible{
       <div class="section-num">02 — SELECTED WORK</div>
       <h2 class="section-title">Work I've Created</h2>
     </div>
-    <div class="section-note">A running edit of recent stills and film work, mixed the way they actually happen on set — back to back, same roll.</div>
+    <div class="section-note">Browse by medium — photography, film, or aerial.</div>
   </div>
 
-  <div class="contact-sheet" id="contactSheet">
-    <!-- Frame 1 -->
-    <div class="frame" data-mode="photo">
-      <div class="frame-art tone-1"></div>
-      <div class="frame-tag">35MM · f/1.8</div>
-      <div class="frame-num">001</div>
-      <div class="frame-caption"><div class="title">Dhulikhel, Morning Light</div><div class="meta">Editorial — Portrait</div></div>
+  <!-- Tab buttons -->
+  <div class="work-tabs" role="tablist">
+    <button class="work-tab active" data-tab="photo" role="tab" aria-selected="true" aria-expanded="true">
+      <div class="work-tab-top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3l2-3h8l2 3h3v12H3V7Z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        Photography
+      </div>
+      <svg class="work-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <button class="work-tab" data-tab="video" role="tab" aria-selected="false" aria-expanded="false">
+      <div class="work-tab-top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8Z"/></svg>
+        YouTube Music Videos
+      </div>
+      <svg class="work-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <button class="work-tab" data-tab="drone" role="tab" aria-selected="false" aria-expanded="false">
+      <div class="work-tab-top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+        Drone / FPV
+      </div>
+      <svg class="work-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- PHOTOGRAPHY TAB -->
+  <div class="work-panel active" id="tab-photo" role="tabpanel">
+    <div class="work-panel-links">
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">001</span>
+        <span class="work-panel-link-title">Dhulikhel, Morning Light</span>
+        <span class="work-panel-link-meta">Editorial — Portrait</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">002</span>
+        <span class="work-panel-link-title">Patan Durbar, Dusk</span>
+        <span class="work-panel-link-meta">Documentary</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">003</span>
+        <span class="work-panel-link-title">Tea House, Solukhumbu</span>
+        <span class="work-panel-link-meta">Travel — Series</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">004</span>
+        <span class="work-panel-link-title">Indra Jatra, Crowd</span>
+        <span class="work-panel-link-meta">Documentary</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">005</span>
+        <span class="work-panel-link-title">Studio, Available Light</span>
+        <span class="work-panel-link-meta">Portrait — Series</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="#" class="work-panel-link">
+        <span class="work-panel-link-num">006</span>
+        <span class="work-panel-link-title">Add your photo link here</span>
+        <span class="work-panel-link-meta">Replace with your URL</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
     </div>
-    <!-- Frame 2 -->
-    <div class="frame" data-mode="video">
-      <div class="frame-art tone-2"></div>
-      <div class="frame-tag video">24FPS · ANAMORPHIC</div>
-      <div class="frame-num">002</div>
-      <div class="frame-caption"><div class="title">Saanvi &amp; Rohan — Film</div><div class="meta">Wedding Feature, 4:32</div></div>
+    <div class="contact-sheet">
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-1"></div>
+        <div class="frame-tag">35MM · f/1.8</div>
+        <div class="frame-num">001</div>
+        <div class="frame-caption"><div class="title">Dhulikhel, Morning Light</div><div class="meta">Editorial — Portrait</div></div>
+      </div>
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-3"></div>
+        <div class="frame-tag">85MM · f/2.0</div>
+        <div class="frame-num">002</div>
+        <div class="frame-caption"><div class="title">Patan Durbar, Dusk</div><div class="meta">Documentary</div></div>
+      </div>
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-4"></div>
+        <div class="frame-tag">50MM · f/1.4</div>
+        <div class="frame-num">003</div>
+        <div class="frame-caption"><div class="title">Tea House, Solukhumbu</div><div class="meta">Travel — Series</div></div>
+      </div>
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-6"></div>
+        <div class="frame-tag">35MM · f/2.8</div>
+        <div class="frame-num">004</div>
+        <div class="frame-caption"><div class="title">Indra Jatra, Crowd</div><div class="meta">Documentary</div></div>
+      </div>
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-8"></div>
+        <div class="frame-tag">105MM · f/2.5</div>
+        <div class="frame-num">005</div>
+        <div class="frame-caption"><div class="title">Studio, Available Light</div><div class="meta">Portrait — Series</div></div>
+      </div>
+      <div class="frame" data-mode="photo">
+        <div class="frame-art tone-2"></div>
+        <div class="frame-tag">50MM · f/1.8</div>
+        <div class="frame-num">006</div>
+        <div class="frame-caption"><div class="title">Replace with your photo</div><div class="meta">Add real photo here</div></div>
+      </div>
     </div>
-    <!-- Frame 3 -->
-    <div class="frame" data-mode="photo">
-      <div class="frame-art tone-3"></div>
-      <div class="frame-tag">85MM · f/2.0</div>
-      <div class="frame-num">003</div>
-      <div class="frame-caption"><div class="title">Patan Durbar, Dusk</div><div class="meta">Documentary</div></div>
+  </div>
+
+  <!-- MUSIC VIDEOS TAB -->
+  <div class="work-panel" id="tab-video" role="tabpanel">
+    <div class="work-panel-links">
+      <button class="work-panel-link mv-play-btn" data-video-id="qUGAYFCG2Us" data-title="Music Video 01" data-meta="Music Video · Hangrim Productions">
+        <span class="work-panel-link-num">01</span>
+
+        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
+        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="work-panel-link mv-play-btn" data-video-id="Y-KRQkXNCF0" data-title="Music Video 02" data-meta="Music Video · Hangrim Productions">
+        <span class="work-panel-link-num">02</span>
+
+        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
+        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="work-panel-link mv-play-btn" data-video-id="uS7pI_HjBIQ" data-title="Music Video 03" data-meta="Music Video · Hangrim Productions">
+        <span class="work-panel-link-num">03</span>
+
+        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
+        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="work-panel-link mv-play-btn" data-video-id="fE-AkRbkq68" data-title="Music Video 04" data-meta="Music Video · Hangrim Productions">
+        <span class="work-panel-link-num">04</span>
+
+        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
+        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="work-panel-link mv-play-btn" data-video-id="xh_xopVFGLc" data-title="Music Video 05" data-meta="Music Video · Hangrim Productions">
+        <span class="work-panel-link-num">05</span>
+
+        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
+        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
+      </button>
     </div>
-    <!-- Frame 4 -->
-    <div class="frame" data-mode="photo">
-      <div class="frame-art tone-4"></div>
-      <div class="frame-tag">50MM · f/1.4</div>
-      <div class="frame-num">004</div>
-      <div class="frame-caption"><div class="title">Tea House, Solukhumbu</div><div class="meta">Travel — Series</div></div>
+    <div class="video-grid">
+      <div class="video-card mv-thumb-card" data-video-id="qUGAYFCG2Us" data-title="Music Video 01">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/qUGAYFCG2Us/hqdefault.jpg" alt="Music Video 01" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card mv-thumb-card" data-video-id="Y-KRQkXNCF0" data-title="Music Video 02">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/Y-KRQkXNCF0/hqdefault.jpg" alt="Music Video 02" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card mv-thumb-card" data-video-id="uS7pI_HjBIQ" data-title="Music Video 03">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/uS7pI_HjBIQ/hqdefault.jpg" alt="Music Video 03" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card mv-thumb-card" data-video-id="fE-AkRbkq68" data-title="Music Video 04">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/fE-AkRbkq68/hqdefault.jpg" alt="Music Video 04" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card mv-thumb-card" data-video-id="xh_xopVFGLc" data-title="Music Video 05">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/xh_xopVFGLc/hqdefault.jpg" alt="Music Video 05" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Frame 5 -->
-    <div class="frame" data-mode="video">
-      <div class="frame-art tone-5"></div>
-      <div class="frame-tag video">24FPS · HANDHELD</div>
-      <div class="frame-num">005</div>
-      <div class="frame-caption"><div class="title">Yatra Coffee — Brand Film</div><div class="meta">Commercial, 1:48</div></div>
+  </div>
+
+  <!-- DRONE / FPV TAB -->
+  <div class="work-panel" id="tab-drone" role="tabpanel">
+    <div class="work-panel-links">
+      <a href="https://www.youtube.com/watch?v=DRONE_ID_1" target="_blank" rel="noopener" class="work-panel-link">
+        <span class="work-panel-link-num">01</span>
+        <span class="work-panel-link-title">Replace with drone footage title</span>
+        <span class="work-panel-link-meta">DJI Flip · replace DRONE_ID_1</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="https://www.youtube.com/watch?v=DRONE_ID_2" target="_blank" rel="noopener" class="work-panel-link">
+        <span class="work-panel-link-num">02</span>
+        <span class="work-panel-link-title">Replace with drone footage title</span>
+        <span class="work-panel-link-meta">FPV · replace DRONE_ID_2</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="https://www.youtube.com/watch?v=DRONE_ID_3" target="_blank" rel="noopener" class="work-panel-link">
+        <span class="work-panel-link-num">03</span>
+        <span class="work-panel-link-title">Replace with drone footage title</span>
+        <span class="work-panel-link-meta">Aerial · replace DRONE_ID_3</span>
+        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
     </div>
-    <!-- Frame 6 -->
-    <div class="frame" data-mode="photo">
-      <div class="frame-art tone-6"></div>
-      <div class="frame-tag">35MM · f/2.8</div>
-      <div class="frame-num">006</div>
-      <div class="frame-caption"><div class="title">Indra Jatra, Crowd</div><div class="meta">Documentary</div></div>
-    </div>
-    <!-- Frame 7 -->
-    <div class="frame" data-mode="video">
-      <div class="frame-art tone-7"></div>
-      <div class="frame-tag video">24FPS · GIMBAL</div>
-      <div class="frame-num">007</div>
-      <div class="frame-caption"><div class="title">Pokhara Lakeside — Reel</div><div class="meta">Tourism Board, 0:58</div></div>
-    </div>
-    <!-- Frame 8 -->
-    <div class="frame" data-mode="photo">
-      <div class="frame-art tone-8"></div>
-      <div class="frame-tag">105MM · f/2.5</div>
-      <div class="frame-num">008</div>
-      <div class="frame-caption"><div class="title">Studio, Available Light</div><div class="meta">Portrait — Series</div></div>
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/DRONE_ID_1" title="Drone Shot 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+          <span class="video-card-meta">DJI Flip · Replace DRONE_ID_1 with your YouTube video ID</span>
+      </div>
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/DRONE_ID_2" title="Drone Shot 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+          <span class="video-card-meta">FPV · Replace DRONE_ID_2 with your YouTube video ID</span>
+      </div>
+      <div class="video-card">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/DRONE_ID_3" title="Drone Shot 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+          <span class="video-card-meta">Aerial · Replace DRONE_ID_3 with your YouTube video ID</span>
+      </div>
     </div>
   </div>
 </section>
@@ -2071,7 +2613,84 @@ a:focus-visible, button:focus-visible{
   workObserver.observe(work);
 })();
 
-// ===== SCROLL REVEAL =====
+// ===== WORK TABS: toggle accordion — click to expand, click again to collapse =====
+(function(){
+  const tabs = document.querySelectorAll('.work-tab');
+  const panels = document.querySelectorAll('.work-panel');
+  if(!tabs.length) return;
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      const target = tab.getAttribute('data-tab');
+      const isAlreadyActive = tab.classList.contains('active');
+
+      // Close all
+      tabs.forEach(function(t){
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+        t.setAttribute('aria-expanded','false');
+      });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+
+      // If it wasn't open, open it
+      if(!isAlreadyActive){
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected','true');
+        tab.setAttribute('aria-expanded','true');
+        const panel = document.getElementById('tab-' + target);
+        if(panel) panel.classList.add('active');
+      }
+    });
+  });
+})();
+
+// ===== MUSIC VIDEO LIGHTBOX: thumbnail cards + link list buttons open an inline player =====
+(function(){
+  const modal = document.getElementById('ytModal');
+  const backdrop = document.getElementById('ytModalBackdrop');
+  const closeBtn = document.getElementById('ytModalClose');
+  const frame = document.getElementById('ytModalFrame');
+  const titleEl = document.getElementById('ytModalTitle');
+  const ytLink = document.getElementById('ytModalYtLink');
+  if(!modal || !frame) return;
+
+  function openModal(videoId, title){
+    frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+    titleEl.textContent = title || '';
+    ytLink.href = 'https://www.youtube.com/watch?v=' + videoId;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    frame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  // thumbnail cards
+  document.querySelectorAll('.mv-thumb-card').forEach(function(card){
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(){
+      openModal(card.getAttribute('data-video-id'), card.getAttribute('data-title'));
+    });
+  });
+
+  // link list buttons
+  document.querySelectorAll('.mv-play-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      openModal(btn.getAttribute('data-video-id'), btn.getAttribute('data-title'));
+    });
+  });
+
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeModal();
+  });
+})();
+
+
 (function(){
   const targets = document.querySelectorAll(
     '.section-head, .about, .exp-block, .mediums, .process-item, .testimonial, .contact-gold-inner, .frame'
@@ -2090,6 +2709,28 @@ a:focus-visible, button:focus-visible{
   targets.forEach(function(el){ ro.observe(el); });
 })();
 </script>
+
+<!-- ===== VIDEO LIGHTBOX MODAL ===== -->
+<div class="yt-modal" id="ytModal" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="yt-modal-backdrop" id="ytModalBackdrop"></div>
+  <div class="yt-modal-box">
+    <div class="yt-modal-header">
+      <span class="yt-modal-title" id="ytModalTitle"></span>
+      <div class="yt-modal-actions">
+        <a class="yt-modal-yt-link" id="ytModalYtLink" target="_blank" rel="noopener" title="Watch on YouTube">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.7 15.5V8.5l6.3 3.5-6.3 3.5Z"/></svg>
+          Watch on YouTube
+        </a>
+        <button class="yt-modal-close" id="ytModalClose" aria-label="Close video">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="yt-modal-embed">
+      <iframe id="ytModalFrame" src="" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
