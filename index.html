@@ -1805,6 +1805,185 @@ footer{
   .yt-modal-box{ max-width:100%; border-bottom:none; border-left:none; border-right:none; }
 }
 
+.mv-thumb-placeholder{
+  background:var(--card);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.mv-thumb-overlay-always{
+  background:rgba(0,0,0,0.2);
+  flex-direction:column;
+  gap:12px;
+}
+.mv-placeholder-label{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.06em;
+  color:var(--grey-dim);
+  text-align:center;
+  padding:0 12px;
+}
+
+/* ============ GOOGLE DRIVE CARD ============ */
+.gdrive-thumb{
+  flex-direction:column;
+  gap:10px;
+}
+.gdrive-icon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-60%);
+  z-index:1;
+  opacity:0.7;
+  transition:opacity 0.3s ease;
+}
+.gdrive-card:hover .gdrive-icon{ opacity:1; }
+.gdrive-card .mv-placeholder-label{
+  position:absolute;
+  bottom:14px;
+  left:0; right:0;
+}
+
+/* ============ CV BUTTON ============ */
+.cv-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  margin-top:32px;
+  padding:13px 24px;
+  background:transparent;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.08em;
+  cursor:pointer;
+  transition:background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.cv-btn:hover{
+  background:var(--accent);
+  color:#121212;
+  box-shadow:0 0 20px rgba(212,175,55,0.3);
+}
+.cv-btn svg{ flex-shrink:0; transition:stroke 0.25s ease; }
+.cv-btn:hover svg{ stroke:#121212; }
+
+/* ============ CV MODAL ============ */
+.cv-modal{
+  position:fixed;
+  inset:0;
+  z-index:950;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity 0.3s ease, visibility 0.3s ease;
+}
+.cv-modal.open{
+  opacity:1;
+  visibility:visible;
+}
+.cv-modal-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  cursor:pointer;
+}
+.cv-modal-box{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:640px;
+  max-height:90vh;
+  background:var(--bg-raised);
+  border:1px solid var(--hairline);
+  box-shadow:0 24px 80px rgba(0,0,0,0.8);
+  display:flex;
+  flex-direction:column;
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.35s cubic-bezier(.22,.61,.36,1);
+  overflow:hidden;
+}
+.cv-modal.open .cv-modal-box{
+  transform:translateY(0) scale(1);
+}
+.cv-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 18px;
+  border-bottom:1px solid var(--hairline);
+  flex-shrink:0;
+}
+.cv-modal-title{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.1em;
+  color:var(--grey);
+}
+.cv-modal-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.cv-modal-download{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.05em;
+  color:var(--grey);
+  padding:6px 10px;
+  border:1px solid var(--hairline);
+  transition:color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  white-space:nowrap;
+}
+.cv-modal-download:hover{
+  color:var(--accent);
+  border-color:var(--accent);
+  background:var(--card);
+}
+.cv-modal-close{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  background:none;
+  border:1px solid var(--hairline);
+  color:var(--grey);
+  cursor:pointer;
+  transition:color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  flex-shrink:0;
+}
+.cv-modal-close:hover{
+  color:var(--bone);
+  border-color:var(--bone);
+  background:var(--card);
+}
+.cv-modal-body{
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.cv-modal-img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+@media (max-width:560px){
+  .cv-modal{ padding:0; align-items:flex-end; }
+  .cv-modal-box{ max-width:100%; max-height:92vh; border-bottom:none; border-left:none; border-right:none; border-radius:0; }
+}
+
 /* focus visibility */
 a:focus-visible, button:focus-visible{
   outline:1.5px solid var(--accent);
@@ -1895,6 +2074,10 @@ a:focus-visible, button:focus-visible{
       <p>My name is <strong>Pranesh Rai</strong>, originally from Bhojpur in eastern Nepal and currently based in Kathmandu. I am a passionate <strong>Cinematographer, Video Editor, Documentary Filmmaker, Photographer, and Drone/FPV Pilot</strong> with over 3 years of professional experience in visual storytelling.</p>
       <p>I enjoy capturing authentic moments and transforming them into compelling visual narratives that connect with audiences. For me, the camera is more than just a tool — it is a medium for creativity, expression, and storytelling. Through documentaries, music videos, promotional content, and cinematic productions, I strive to create meaningful and visually engaging content that leaves a lasting impact.</p>
       <p>I am deeply interested in exploring different perspectives, emotions, cultures, and stories through filmmaking. With a strong commitment to quality, creativity, and continuous learning, I constantly refine my skills to deliver professional and impactful visual experiences.</p>
+      <button class="cv-btn" id="cvBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        View My CV
+      </button>
     </div>
     <div class="specs-col">
       <div class="software-tab-label">EQUIPMENT</div>
@@ -1968,48 +2151,17 @@ a:focus-visible, button:focus-visible{
       </div>
       <svg class="work-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </button>
+    <button class="work-tab" data-tab="documentary" role="tab" aria-selected="false" aria-expanded="false">
+      <div class="work-tab-top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="3"/><path d="m9 10 1.5 1.5L13 8"/></svg>
+        Documentary Videos
+      </div>
+      <svg class="work-tab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
   </div>
 
   <!-- PHOTOGRAPHY TAB -->
   <div class="work-panel active" id="tab-photo" role="tabpanel">
-    <div class="work-panel-links">
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">001</span>
-        <span class="work-panel-link-title">Dhulikhel, Morning Light</span>
-        <span class="work-panel-link-meta">Editorial — Portrait</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">002</span>
-        <span class="work-panel-link-title">Patan Durbar, Dusk</span>
-        <span class="work-panel-link-meta">Documentary</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">003</span>
-        <span class="work-panel-link-title">Tea House, Solukhumbu</span>
-        <span class="work-panel-link-meta">Travel — Series</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">004</span>
-        <span class="work-panel-link-title">Indra Jatra, Crowd</span>
-        <span class="work-panel-link-meta">Documentary</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">005</span>
-        <span class="work-panel-link-title">Studio, Available Light</span>
-        <span class="work-panel-link-meta">Portrait — Series</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-      <a href="#" class="work-panel-link">
-        <span class="work-panel-link-num">006</span>
-        <span class="work-panel-link-title">Add your photo link here</span>
-        <span class="work-panel-link-meta">Replace with your URL</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-      </a>
-    </div>
     <div class="contact-sheet">
       <div class="frame" data-mode="photo">
         <div class="frame-art tone-1"></div>
@@ -2052,123 +2204,121 @@ a:focus-visible, button:focus-visible{
 
   <!-- MUSIC VIDEOS TAB -->
   <div class="work-panel" id="tab-video" role="tabpanel">
-    <div class="work-panel-links">
-      <button class="work-panel-link mv-play-btn" data-video-id="qUGAYFCG2Us" data-title="Music Video 01" data-meta="Music Video · Hangrim Productions">
-        <span class="work-panel-link-num">01</span>
-
-        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
-        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
-      </button>
-      <button class="work-panel-link mv-play-btn" data-video-id="Y-KRQkXNCF0" data-title="Music Video 02" data-meta="Music Video · Hangrim Productions">
-        <span class="work-panel-link-num">02</span>
-
-        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
-        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
-      </button>
-      <button class="work-panel-link mv-play-btn" data-video-id="uS7pI_HjBIQ" data-title="Music Video 03" data-meta="Music Video · Hangrim Productions">
-        <span class="work-panel-link-num">03</span>
-
-        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
-        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
-      </button>
-      <button class="work-panel-link mv-play-btn" data-video-id="fE-AkRbkq68" data-title="Music Video 04" data-meta="Music Video · Hangrim Productions">
-        <span class="work-panel-link-num">04</span>
-
-        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
-        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
-      </button>
-      <button class="work-panel-link mv-play-btn" data-video-id="xh_xopVFGLc" data-title="Music Video 05" data-meta="Music Video · Hangrim Productions">
-        <span class="work-panel-link-num">05</span>
-
-        <span class="work-panel-link-meta">Music Video · Hangrim Productions</span>
-        <svg class="work-panel-link-arrow mv-play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5Z" fill="currentColor" stroke="none"/></svg>
-      </button>
-    </div>
     <div class="video-grid">
-      <div class="video-card mv-thumb-card" data-video-id="qUGAYFCG2Us" data-title="Music Video 01">
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=qUGAYFCG2Us" target="_blank" rel="noopener">
         <div class="video-embed mv-thumb">
           <img src="https://img.youtube.com/vi/qUGAYFCG2Us/hqdefault.jpg" alt="Music Video 01" loading="lazy">
           <div class="mv-thumb-overlay">
             <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
         </div>
-      </div>
-      <div class="video-card mv-thumb-card" data-video-id="Y-KRQkXNCF0" data-title="Music Video 02">
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=Y-KRQkXNCF0" target="_blank" rel="noopener">
         <div class="video-embed mv-thumb">
           <img src="https://img.youtube.com/vi/Y-KRQkXNCF0/hqdefault.jpg" alt="Music Video 02" loading="lazy">
           <div class="mv-thumb-overlay">
             <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
         </div>
-      </div>
-      <div class="video-card mv-thumb-card" data-video-id="uS7pI_HjBIQ" data-title="Music Video 03">
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=uS7pI_HjBIQ" target="_blank" rel="noopener">
         <div class="video-embed mv-thumb">
           <img src="https://img.youtube.com/vi/uS7pI_HjBIQ/hqdefault.jpg" alt="Music Video 03" loading="lazy">
           <div class="mv-thumb-overlay">
             <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
         </div>
-      </div>
-      <div class="video-card mv-thumb-card" data-video-id="fE-AkRbkq68" data-title="Music Video 04">
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=fE-AkRbkq68" target="_blank" rel="noopener">
         <div class="video-embed mv-thumb">
           <img src="https://img.youtube.com/vi/fE-AkRbkq68/hqdefault.jpg" alt="Music Video 04" loading="lazy">
           <div class="mv-thumb-overlay">
             <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
         </div>
-      </div>
-      <div class="video-card mv-thumb-card" data-video-id="xh_xopVFGLc" data-title="Music Video 05">
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=xh_xopVFGLc" target="_blank" rel="noopener">
         <div class="video-embed mv-thumb">
           <img src="https://img.youtube.com/vi/xh_xopVFGLc/hqdefault.jpg" alt="Music Video 05" loading="lazy">
           <div class="mv-thumb-overlay">
             <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
           </div>
         </div>
-      </div>
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=EuCgkyYW-Mo" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/EuCgkyYW-Mo/hqdefault.jpg" alt="Music Video 06" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 
   <!-- DRONE / FPV TAB -->
   <div class="work-panel" id="tab-drone" role="tabpanel">
-    <div class="work-panel-links">
-      <a href="https://www.youtube.com/watch?v=DRONE_ID_1" target="_blank" rel="noopener" class="work-panel-link">
-        <span class="work-panel-link-num">01</span>
-        <span class="work-panel-link-title">Replace with drone footage title</span>
-        <span class="work-panel-link-meta">DJI Flip · replace DRONE_ID_1</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    <div class="video-grid">
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=MF_IGAJrsu4" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/MF_IGAJrsu4/hqdefault.jpg" alt="Drone Video 01" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
       </a>
-      <a href="https://www.youtube.com/watch?v=DRONE_ID_2" target="_blank" rel="noopener" class="work-panel-link">
-        <span class="work-panel-link-num">02</span>
-        <span class="work-panel-link-title">Replace with drone footage title</span>
-        <span class="work-panel-link-meta">FPV · replace DRONE_ID_2</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=yAD8e0bAIBc" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/yAD8e0bAIBc/hqdefault.jpg" alt="Drone Video 02" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
       </a>
-      <a href="https://www.youtube.com/watch?v=DRONE_ID_3" target="_blank" rel="noopener" class="work-panel-link">
-        <span class="work-panel-link-num">03</span>
-        <span class="work-panel-link-title">Replace with drone footage title</span>
-        <span class="work-panel-link-meta">Aerial · replace DRONE_ID_3</span>
-        <svg class="work-panel-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=QkwKi6Hr45U" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/QkwKi6Hr45U/hqdefault.jpg" alt="Drone Video 03" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>
+      </a>
+      <a class="video-card mv-thumb-card gdrive-card" href="https://drive.google.com/file/d/1gtT8ntrEYinpHBAsX17x5XnkERE4hv-T/view?usp=sharing" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb mv-thumb-placeholder gdrive-thumb">
+          <div class="gdrive-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none"><path d="M12 2L2 19h20L12 2z" fill="#4285F4" opacity="0.15"/><path d="M8.5 19L2 19 8 8l3 5.2L8.5 19z" fill="#0F9D58"/><path d="M15.5 19l6.5 0-6-11-3 5.2 2.5 5.8z" fill="#F4B400"/><path d="M8.5 19h7L12 13.2 8.5 19z" fill="#4285F4"/></svg>
+          </div>
+          <div class="mv-thumb-overlay mv-thumb-overlay-always">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <span class="mv-placeholder-label">Google Drive · Aerial Footage</span>
+        </div>
       </a>
     </div>
+  </div>
+
+  <!-- DOCUMENTARY VIDEOS TAB -->
+  <div class="work-panel" id="tab-documentary" role="tabpanel">
     <div class="video-grid">
-      <div class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/DRONE_ID_1" title="Drone Shot 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <a class="video-card mv-thumb-card gdrive-card" href="https://drive.google.com/file/d/1FQnvtLYBIh2uZGjt6Q9xCNCxnZwe14_4/view?usp=sharing" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb mv-thumb-placeholder gdrive-thumb">
+          <div class="gdrive-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none"><path d="M12 2L2 19h20L12 2z" fill="#4285F4" opacity="0.15"/><path d="M8.5 19L2 19 8 8l3 5.2L8.5 19z" fill="#0F9D58"/><path d="M15.5 19l6.5 0-6-11-3 5.2 2.5 5.8z" fill="#F4B400"/><path d="M8.5 19h7L12 13.2 8.5 19z" fill="#4285F4"/></svg>
+          </div>
+          <div class="mv-thumb-overlay mv-thumb-overlay-always">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+          <span class="mv-placeholder-label">Google Drive · Documentary</span>
         </div>
-          <span class="video-card-meta">DJI Flip · Replace DRONE_ID_1 with your YouTube video ID</span>
-      </div>
-      <div class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/DRONE_ID_2" title="Drone Shot 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </a>
+      <a class="video-card mv-thumb-card" href="https://www.youtube.com/watch?v=dUwZ2Z77y9Q" target="_blank" rel="noopener">
+        <div class="video-embed mv-thumb">
+          <img src="https://img.youtube.com/vi/dUwZ2Z77y9Q/hqdefault.jpg" alt="Documentary 02" loading="lazy">
+          <div class="mv-thumb-overlay">
+            <div class="mv-play-circle"><svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
         </div>
-          <span class="video-card-meta">FPV · Replace DRONE_ID_2 with your YouTube video ID</span>
-      </div>
-      <div class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/DRONE_ID_3" title="Drone Shot 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        </div>
-          <span class="video-card-meta">Aerial · Replace DRONE_ID_3 with your YouTube video ID</span>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -2644,6 +2794,31 @@ a:focus-visible, button:focus-visible{
   });
 })();
 
+// ===== CV MODAL =====
+(function(){
+  const btn = document.getElementById('cvBtn');
+  const modal = document.getElementById('cvModal');
+  const backdrop = document.getElementById('cvModalBackdrop');
+  const closeBtn = document.getElementById('cvModalClose');
+  if(!btn || !modal) return;
+
+  function openCV(){
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCV(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', openCV);
+  backdrop.addEventListener('click', closeCV);
+  closeBtn.addEventListener('click', closeCV);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeCV();
+  });
+})();
+
 // ===== MUSIC VIDEO LIGHTBOX: thumbnail cards + link list buttons open an inline player =====
 (function(){
   const modal = document.getElementById('ytModal');
@@ -2713,7 +2888,29 @@ a:focus-visible, button:focus-visible{
 })();
 </script>
 
-<!-- ===== VIDEO LIGHTBOX MODAL ===== -->
+<!-- ===== CV MODAL ===== -->
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-label="Pranesh Rai CV">
+  <div class="cv-modal-backdrop" id="cvModalBackdrop"></div>
+  <div class="cv-modal-box">
+    <div class="cv-modal-header">
+      <span class="cv-modal-title">CURRICULUM VITAE — PRANESH RAI</span>
+      <div class="cv-modal-actions">
+        <a class="cv-modal-download" href="praneshcv.png" download="Pranesh_Rai_CV.png" title="Download CV">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download
+        </a>
+        <button class="cv-modal-close" id="cvModalClose" aria-label="Close CV">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="cv-modal-body">
+      <img src="praneshcv.png" alt="Pranesh Rai CV" class="cv-modal-img">
+    </div>
+  </div>
+</div>
+
+</body>
 <div class="yt-modal" id="ytModal" role="dialog" aria-modal="true" aria-label="Video player">
   <div class="yt-modal-backdrop" id="ytModalBackdrop"></div>
   <div class="yt-modal-box">
