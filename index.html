@@ -2655,7 +2655,10 @@ a:focus-visible, button:focus-visible{
   if(!modal || !frame) return;
 
   function openModal(videoId, title){
-    frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+    var origin = window.location.origin || '';
+    frame.src = 'https://www.youtube.com/embed/' + videoId
+      + '?autoplay=1&rel=0&enablejsapi=1'
+      + (origin ? '&origin=' + encodeURIComponent(origin) : '');
     titleEl.textContent = title || '';
     ytLink.href = 'https://www.youtube.com/watch?v=' + videoId;
     modal.classList.add('open');
@@ -2727,7 +2730,7 @@ a:focus-visible, button:focus-visible{
       </div>
     </div>
     <div class="yt-modal-embed">
-      <iframe id="ytModalFrame" src="" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe id="ytModalFrame" src="" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
   </div>
 </div>
